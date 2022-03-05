@@ -11,6 +11,35 @@ set :branch, "main"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
+after 'deploy:publishing', 'uwsgi:restart'
+
+namespace :uwsgi do
+    desc 'Restart application'
+    task :restart do
+        on roles(:web) do |h|
+	    execute :sudo, 'sv reload uwsgi'
+	end
+    end
+end
+
+after 'deploy:updating', 'python:create_venv'
+
+namespace :python do
+
+    def venv_path
+        File.join(shared_path, 'env')
+    end
+
+    desc 'Create venv'
+    task :create_venv do
+        on roles([:app, :web]) do |h|
+	    execute "python3.8 -m venv #{venv_path}"
+            execute "source #{venv_path}/bin/activate"
+	    execute "#{venv_path}/bin/pip install -r #{release_path}/requirements.txt"
+        end
+    end
+end
+
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
 
