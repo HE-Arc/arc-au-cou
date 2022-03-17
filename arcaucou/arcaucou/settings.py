@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-u0(psuh_x9qnk&x!2e&8piia(i6lag^x*q1@vjud1pb%t9w^1r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arcaucou.srvz-webapp.he-arc.ch', '127.0.0.1']
+ALLOWED_HOSTS = ['arcaucou.srvz-webapp.he-arc.ch', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -38,8 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'arcaucouapp',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTIFICATION_CLASSES': [
+        'rest_framework.authentification.TokenAuthentification',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
