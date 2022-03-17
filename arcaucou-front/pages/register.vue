@@ -8,21 +8,25 @@
                 <h1 class="block mt-3 text-xl text-gray-700 text-center font-semibold">
                     Register
                 </h1>
-                <form method="#" action="#" class="mt-10">
+                <form @submit.prevent="handleRegister" class="mt-10">
                     <div>
-                        <input type="text" placeholder="Username" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                        <input type="text" placeholder="Username" v-model="userData.username" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                    </div>
+
+                    <div>
+                        <input type="email" placeholder="Email" v-model="userData.email" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
                     </div>
 
                     <div class="mt-7">
-                        <input type="password" placeholder="Password" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                        <input type="password" placeholder="Password" v-model="userData.password" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
                     </div>
 
                     <div class="mt-7">
-                        <input type="password" placeholder="Confirm password" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                        <input type="password" placeholder="Confirm password" v-model="userData.password2" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
                     </div>
 
                     <div class="mt-7">
-                        <button class="mb-4 border-green-gemme border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                        <button @click="register()" class="mb-4 border-green-gemme border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                             Register
                         </button>
                     </div>
@@ -38,5 +42,28 @@
 export default {
   layout: 'main',
   name: 'Arc Au Cou - Register',
+  data: function(){
+    return {
+      dataUser:{
+        username: "",
+        email: "",
+        password: "",
+        password2: ""
+      },
+    }
+  },
+  methods:{
+    handleRegister: async function(){
+      await this.$axios.post('/register', dataUser).then((result) => {
+        this.$toasted.global.defaultSuccess({
+          msg: 'Good'
+        })
+      }).catch((err) => {
+        this.$toasted.global.defaultError({
+          msg: 'Error'
+        })
+      });
+    },
+  }
 }
 </script>
