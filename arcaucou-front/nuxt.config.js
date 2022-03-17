@@ -31,7 +31,64 @@ export default {
     '@nuxtjs/color-mode',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/auth',
+    '@nuxtjs/toast',
   ],
+  auth: {
+    strategies: {
+      local: {
+        scheme: 'refresh',
+        localStorage: {
+          prefix: 'auth.',
+        },
+        token: {
+          prefix: 'access_token.',
+          property: 'access_token',
+          maxAge: 86400,
+          type: 'Bearer',
+        },
+        refreshToken: {
+          prefix: 'refresh_token.',
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 15,
+        },
+        user: {
+          property: 'user',
+          autoFetch: true,
+        },
+        endpoints: {
+          login: { url: '/login', method: 'post' },
+          refresh: { url: '/token/refresh/', method: 'post' },
+          user: { url: '/user', method: 'get' },
+          logout: { url: '/logout', method: 'post' },
+        },
+      },
+    },
+  },
+  toast: {
+    position: 'top-center',
+    iconPack: 'fontawesome',
+    duration: 3000,
+    register: [
+      {
+        name: 'defaultSuccess',
+        message: (payload) => (!payload.msg ? 'Register' : payload.msg),
+        options: {
+          type: 'success',
+          icon: 'check',
+        },
+      },
+      {
+        name: 'defaultError',
+        message: (payload) => (!payload.msg ? 'Error' : payload.msg),
+        options: {
+          type: 'error',
+          icon: 'times',
+        },
+      },
+    ],
+  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
@@ -49,7 +106,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://127.0.0.1:8000/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

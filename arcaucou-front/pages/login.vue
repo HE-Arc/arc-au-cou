@@ -8,13 +8,13 @@
                 <h1 class="block mt-3 text-xl text-gray-700 text-center font-semibold">
                     Login
                 </h1>
-                <form method="#" action="#" class="mt-10">
+                <form @submit.prevent="handleLogin" class="mt-10">
                     <div>
-                        <input type="text" placeholder="Username" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                        <input type="text" v-model="userData.username" placeholder="Username" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
                     </div>
 
                     <div class="mt-7">
-                        <input type="password" placeholder="Password" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
+                        <input type="password" v-model="userData.password" placeholder="Password" class="mt-1 pl-3 block w-full border-none bg-gray-100 dark:bg-d-background h-11 rounded-xl shadow-lg focus:border-green-gemme">
                     </div>
 
                     <div class="mt-7">
@@ -34,5 +34,29 @@
 export default {
   layout: 'main',
   name: 'Arc Au Cou - Login',
+  data: function(){
+    return {
+      userData: {
+        username: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    async handleLogin(){
+      try {
+        await this.$auth.loginWith('local', {data: userData})
+        await this.$auth.$storage.setUniversal('email', response.data.email)
+        await this.$auth.setUserToken(response.data.accestoken, reponse.data.refresh)
+        this.$toasted.global.defaultSuccess({
+          msg: 'Good'
+        })
+      } catch (err) {
+        this.$toasted.global.defaultError({
+          msg: 'Error'
+        })
+      }
+    }
+  }
 }
 </script>
