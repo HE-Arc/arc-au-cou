@@ -1,6 +1,6 @@
 <template>
   <main class='bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text'>
-    <Timer :running=true class="mb-4"/>
+    <Timer :running=true class="pt-10 mb-4"/>
     <div class="mx-auto w-1/2 text-center mb-4">
       <button class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Commencer</button>
     </diV>
@@ -12,7 +12,7 @@
 <script>
 export default {
   layout:'main',
-  name: 'Arc',
+  name: 'index',
   data: function() {
     return {
     gridStart :[[3,0,6,5,2,0,0,8,7],
