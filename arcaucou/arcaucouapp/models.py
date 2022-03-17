@@ -5,7 +5,6 @@ class User(models.Model):
     username = models.CharField(max_length=255)
     email = models.EmailField()
     password = models.CharField(max_length=255)
-    
 class Group(models.Model):
     name = models.CharField(max_length=255)
     
