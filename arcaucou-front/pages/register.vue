@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="mt-7">
-                        <button @click="register()" class="mb-4 border-green-gemme border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                        <button class="mb-4 border-green-gemme border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                             Register
                         </button>
                     </div>
@@ -44,7 +44,7 @@ export default {
   name: 'Arc Au Cou - Register',
   data: function(){
     return {
-      dataUser:{
+      userData:{
         username: "",
         email: "",
         password: "",
@@ -54,13 +54,14 @@ export default {
   },
   methods:{
     handleRegister: async function(){
-      await this.$axios.post('/register', dataUser).then((result) => {
+      await this.$axios.post('/register', {"user":{"username": this.userData.username, "email": this.userData.email, "password": this.userData.password}}).then((result) => {
         this.$toasted.global.defaultSuccess({
-          msg: 'Good'
+          msg: 'Votre compté à été créé'
         })
+        console.log(result);
       }).catch((err) => {
         this.$toasted.global.defaultError({
-          msg: 'Error'
+          msg: 'Oupsss... Erreur lors de la création du compte'
         })
       });
     },
