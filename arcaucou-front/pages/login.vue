@@ -45,15 +45,15 @@ export default {
   methods: {
     async handleLogin(){
       try {
-        await this.$auth.loginWith('local', {data: userData})
-        await this.$auth.$storage.setUniversal('email', response.data.email)
-        await this.$auth.setUserToken(response.data.accestoken, reponse.data.refresh)
+        await this.$auth.loginWith('local', {"user":{"username": this.userData.username, "password": this.userData.password}})
+        //await this.$auth.$storage.setUniversal('email', response.data.email)
+        //await this.$auth.setUserToken(response.data.accestoken, reponse.data.refresh)
         this.$toasted.global.defaultSuccess({
-          msg: 'Good'
+          msg: 'Bienvenu ' + this.userData.username
         })
       } catch (err) {
         this.$toasted.global.defaultError({
-          msg: 'Error'
+          msg: 'Oupsss... erreur lors de la connection'
         })
       }
     }
