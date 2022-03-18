@@ -4,6 +4,12 @@
     <div class="mx-auto w-1/2 text-center mb-4">
       <button class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Commencer</button>
     </diV>
+    <div class="mx-auto w-1/2 text-center mb-4">
+      <button @click="start" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Start</button>
+    </diV>
+    <div class="mx-auto w-1/2 text-center mb-4">
+      <button @click="stop" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Stop</button>
+    </diV>
     <SudokuGrid class="mb-10" :gridStart="gridStart"/>
     <Rules/>
   </main>
@@ -27,5 +33,28 @@ export default {
     started: false
     }
   },
+  methods: {
+      start() {
+        this.$confetti.start({
+          particles: [
+            {
+              type: 'heart',
+            },
+            {
+              type: 'rect',
+            },
+            {
+              type: 'circle',
+            },
+          ],
+          windSpeedMax: 0,
+          dropRate: 5
+        });
+      },
+
+      stop() {
+        this.$confetti.stop();
+      },
+    }
 }
 </script>
