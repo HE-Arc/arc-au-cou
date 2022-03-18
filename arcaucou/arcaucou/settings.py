@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'arcaucou.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'arcaucou',
         'USER': 'djangouser',
         'PASSWORD': 'secret',
