@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'arcaucou-front',
+    title: 'Arc Au Cou',
     htmlAttrs: {
       lang: 'en',
     },
