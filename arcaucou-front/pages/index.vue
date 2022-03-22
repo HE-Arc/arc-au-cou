@@ -56,6 +56,13 @@ export default {
       stop() {
         this.$confetti.stop();
       },
+      setupGridObject(){
+        return this.gridStart.map((row) => {
+          return row.map((element) => {
+            return {value: element, isLocked: element != 0, isSelected: false}
+          })
+        })
+      }
     },
     watch:{
     win:function(){
@@ -63,7 +70,7 @@ export default {
     }
   },
     mounted() {
-      this.$store.commit('initGrid', this.gridStart);
+      this.$store.commit('initGrid', this.setupGridObject());
     }
 }
 </script>

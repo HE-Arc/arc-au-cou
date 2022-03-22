@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-3 gap-1 content-center max-w-xs">
-    <div class="" v-for="(value,index) in values" :key="index">
-      <Square class="p-1" :value="value" :posX="idBlock" :posY="index"/>
+    <div class="" v-for="(cell,index) in values" :key="index">
+      <Square class="p-1" :cell="cell" :posX="idBlock" :posY="index"/>
     </div>
   </div>
 </template>
