@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div @click="handleSelect" v-if="number != 0" class="text-center h-10 w-10" :class="[!isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
-      {{number}}
+    <div @click="handleSelect" v-if="cell.value != 0" class="text-center h-10 w-10" :class="[!this.cell.isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
+      {{cell.value}}
     </div>
-    <div @click="handleSelect" v-if="number === 0" class="text-center h-10 w-10" :class="[!isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
+    <div @click="handleSelect" v-if="cell.value === 0" class="text-center h-10 w-10" :class="[!this.cell.isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
 
     </div>
   </diV>
@@ -12,37 +12,28 @@
 <script>
 export default {
   props: {
-    value: Number,
+    cell: Object,
     posX: Number,
     posY: Number
   },
-  data:function() {
-    return {
-      number: this.value,
-      isSelected: false
-    }
-  },
   methods:{
     changeValue: function(e){
-      if (this.isSelected){
+      if (this.cell.isSelected){
         let typed = parseInt(String.fromCharCode(e.keyCode),10);
         // if it was NaN, split out
         if(!typed) return;
-        console.log(typed);
-        this.number = typed;
-        this.isSelected = false;
-        this.$store.commit('changeValue', {x:this.posX, y:this.posY, number:this.number})
+        this.$store.commit('changeValue', {x:this.posX, y:this.posY, number:typed})
       }
     },
     handleSelect: function(){
-      this.isSelected = !this.isSelected;
+      if(!this.cell.isLocked) this.$store.commit('selectCell', {x:this.posX, y:this.posY});
     }
   },
   mounted() {
-    window.addEventListener('keypress', this.changeValue);
+    if(!this.cell.isLocked) window.addEventListener('keypress', this.changeValue);
   },
   destroyed() {
-    window.removeEventListener('keypress', this.changeValue);
+    if(!this.cell.isLocked) window.removeEventListener('keypress', this.changeValue);
   }
 }
 </script>

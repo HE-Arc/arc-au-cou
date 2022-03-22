@@ -12,9 +12,20 @@ export const mutations = {
       return arr.slice()
     })
   },
+  selectCell(state, data) {
+    state.grid.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        if (i === data.x && j === data.y) {
+          cell.isSelected = true
+        } else {
+          cell.isSelected = false
+        }
+      })
+    })
+  },
   changeValue(state, data) {
-    console.log(data)
-    state.grid[data.x][data.y] = data.number
-    state.win = true;
+    console.log(data.number)
+    state.grid[data.x][data.y].value = data.number
+    state.win = true
   },
 }
