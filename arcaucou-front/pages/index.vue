@@ -4,21 +4,21 @@
     <div class="mx-auto w-1/2 text-center mb-4">
       <button class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Commencer</button>
     </diV>
-    <div class="mx-auto w-1/2 text-center mb-4">
-      <button @click="start" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Start</button>
-    </diV>
-    <div class="mx-auto w-1/2 text-center mb-4">
-      <button @click="stop" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Stop</button>
-    </diV>
-    <SudokuGrid class="mb-10" :gridStart="gridStart"/>
+    <SudokuGrid class="mb-10" :gridStart="this.grid"/>
     <Rules/>
   </main>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   layout:'main',
   name: 'index',
+  computed: mapState([
+    'grid',
+    'win'
+  ]),
   data: function() {
     return {
     gridStart :[[3,0,6,5,2,0,0,8,7],
@@ -50,11 +50,20 @@ export default {
           windSpeedMax: 0,
           dropRate: 5
         });
+        setTimeout(()=>{this.stop()}, 2000);
       },
 
       stop() {
         this.$confetti.stop();
       },
+    },
+    watch:{
+    win:function(){
+      this.start();
+    }
+  },
+    mounted() {
+      this.$store.commit('initGrid', this.gridStart);
     }
 }
 </script>
