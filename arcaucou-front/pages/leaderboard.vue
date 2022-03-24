@@ -73,11 +73,6 @@
         </div>
       </div>
     </div>
-
-    <div>
-
-    </diV>
-
   </main>
 </template>
 
@@ -85,6 +80,11 @@
 export default {
   layout:'main',
   name: 'leaderboard',
+  head() {
+    return {
+      title: 'Arc Au Cou - Leaderboard'
+    };
+  },
   data: function() {
     return {
     dataLeaderboard :[["Bob", 500 , "Les arbres"],

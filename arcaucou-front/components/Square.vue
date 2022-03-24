@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div @click="handleSelect" v-if="cell.value != 0" class="text-center h-10 w-10" :class="[!this.cell.isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
+  <div class="text-3xl">
+    <div @click="handleSelect" v-if="cell.value != 0" class="mx-auto dark:bg-d-30 border-2 dark:border-d-30 text-center h-10 w-10" :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10']">
       {{cell.value}}
     </div>
-    <div @click="handleSelect" v-if="cell.value === 0" class="text-center h-10 w-10" :class="[!this.cell.isSelected ? 'dark:bg-d-border' : 'dark:background-darker']">
+    <div @click="handleSelect" v-if="cell.value === 0" class="mx-auto dark:bg-d-30 border-2 dark:border-d-30 text-center h-10 w-10" :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10']">
 
     </div>
   </diV>
@@ -31,7 +31,7 @@ export default {
   mounted() {
     if(!this.cell.isLocked) window.addEventListener('keypress', this.changeValue);
   },
-  destroyed() {
+  unmounted() {
     if(!this.cell.isLocked) window.removeEventListener('keypress', this.changeValue);
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <main class='bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text'>
+  <main class='min-h-screen mt-16 bg-l-background dark:bg-d-background text-l-text dark:text-d-text'>
     <Timer :running="this.isRunningTimer" class="pt-10 mb-4"/>
     <div class="mx-auto w-1/2 h-20 text-center mb-4">
-      <button v-if="!this.isRunningTimer" @click="this.startGame" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-green-gemme">Commencer</button>
+      <button v-if="!this.isRunningTimer" @click="this.startGame" class="text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-10">Commencer</button>
     </diV>
     <SudokuGrid class="mb-10" :gridStart="this.grid"/>
     <Rules/>
@@ -16,6 +16,11 @@ import { mapState } from 'vuex';
 export default {
   layout:'main',
   name: 'index',
+  head() {
+    return {
+      title: 'Arc Au Cou'
+    };
+  },
   computed: mapState([
     'grid',
     'win'
