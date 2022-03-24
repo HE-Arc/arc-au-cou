@@ -1,11 +1,12 @@
 <template>
   <main class='bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text'>
-    <Timer :running=true class="pt-10 mb-4"/>
-    <div class="mx-auto w-1/2 text-center mb-4">
-      <button class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-green-gemme">Commencer</button>
+    <Timer :running="this.isRunningTimer" class="pt-10 mb-4"/>
+    <div class="mx-auto w-1/2 h-20 text-center mb-4">
+      <button v-if="!this.isRunningTimer" @click="this.startGame" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-green-gemme">Commencer</button>
     </diV>
     <SudokuGrid class="mb-10" :gridStart="this.grid"/>
     <Rules/>
+    <Modal v-show="isModal" @close-modal="isModal = false" :time="this.time"/>
   </main>
 </template>
 
@@ -30,11 +31,14 @@ export default {
               [1,3,0,0,0,0,0,0,5],
               [0,0,0,0,0,0,2,0,6],
               [2,5,0,0,7,4,3,0,0]],
-    started: false
+    started: false,
+    isModal: false,
+    isRunningTimer: false,
+    time: 0,
     }
   },
   methods: {
-      start() {
+      startConfetti() {
         this.$confetti.start({
           particles: [
             {
@@ -50,10 +54,10 @@ export default {
           windSpeedMax: 0,
           dropRate: 5
         });
-        setTimeout(()=>{this.stop()}, 2000);
+        setTimeout(()=>{this.stopConfetti()}, 2000);
       },
 
-      stop() {
+      stopConfetti() {
         this.$confetti.stop();
       },
       setupGridObject(){
@@ -62,11 +66,19 @@ export default {
             return {value: element, isLocked: element != 0, isSelected: false}
           })
         })
+      },
+      toggleModal: function(){
+        this.isModal = !this.isModal
+      },
+      startGame: function(){
+        this.isRunningTimer = true
       }
     },
     watch:{
     win:function(){
-      this.start();
+      this.startConfetti();
+      this.isRunningTimer = false;
+      this.toggleModal();
     }
   },
     mounted() {

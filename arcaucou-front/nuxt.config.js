@@ -21,7 +21,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: '~/plugins/vue-confetti.js', mode: 'client' }],
+  plugins: [
+    { src: '~/plugins/vue-confetti.js', mode: 'client' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,6 +35,7 @@ export default {
     '@nuxtjs/tailwindcss',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
+    '@nuxtjs/moment'
   ],
   auth: {
     strategies: {
