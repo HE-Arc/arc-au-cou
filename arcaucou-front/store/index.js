@@ -1,8 +1,6 @@
-import Vue from 'vue'
-
 export const state = () => ({
   grid: [],
-  time: null,
+  time: 0,
   win: false,
 })
 
@@ -24,8 +22,10 @@ export const mutations = {
     })
   },
   changeValue(state, data) {
-    console.log(data.number)
     state.grid[data.x][data.y].value = data.number
     state.win = true
+  },
+  saveTime(state, value) {
+    state.time = value
   },
 }

@@ -4,14 +4,12 @@
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
     <div class="text-center my-auto">
-      <p>{{ time | secondsInMinutes }}</p>
+      <p>{{$moment('2015-01-01').startOf('day').seconds(time).format('mm:ss')}}</p>
     </diV>
   </div>
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
   name:"timer",
   props:{
@@ -22,29 +20,30 @@ export default {
   },
   data: function(){
     return {
-      time: 0
+      time: 0,
+      timer: Function
     }
-  },
-  mounted() {
-    if(this.running) this.startTimer();
   },
   methods: {
     startTimer: function(){
-      this.time = setInterval(() => {
+      this.timer = setInterval(() => {
         this.time++;
       }, 1000);
     },
     reset: function(){
+      clearInterval(this.timer);
       this.time = 0;
     }
   },
-  filters: {
-    secondsInMinutes: function(seconds) {
-      return moment("2015-01-01")
-        .startOf("day")
-        .seconds(seconds)
-        .format("mm:ss");
+  watch:{
+    running:function(){
+      if(this.running){
+        this.startTimer();
+      }else{
+        this.$store.commit('saveTime', this.time);
+        this.reset();
+      }
     }
-  }
+  },
 }
 </script>

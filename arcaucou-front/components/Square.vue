@@ -20,7 +20,6 @@ export default {
     changeValue: function(e){
       if (this.cell.isSelected){
         let typed = parseInt(String.fromCharCode(e.keyCode),10);
-        // if it was NaN, split out
         if(!typed) return;
         this.$store.commit('changeValue', {x:this.posX, y:this.posY, number:typed})
       }
