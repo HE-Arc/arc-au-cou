@@ -6,6 +6,7 @@ from arcaucouapp.serializers import UserSerializer, GroupSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from rest_framework import status
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,27 +23,30 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
         
 class LoginView(APIView):
     def post(self, request, format=None):
-        user = request.data.get('user')
+        user = request.data
+        print(user)
         user_logged = authenticate(username=user['username'], password=user['password'])
-        try:
-            return Response({"result" : "success", "username" : "{}".format(user_logged.username)})
-        except:
-            return Response({"result" : "failed", "error" : "Username or password incorrect"})
+        if user_logged is not None:
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
             
     
 class RegisterView(APIView):
     def post(self, request, format=None):
-        user = request.data.get('user')
+        user = request.data
         serializer = UserSerializer(data=user)
+        error = {}
         if user['password'] != user['password2']:
-            return Response({"result" : "failed", "password": "Password fields didn't match."})
-        if serializer.is_valid(raise_exception=True):
+            error["password"] = "Password fields didn't match."
+        if serializer.is_valid():
             user_registered = serializer.save()
         try:
-            return Response({"result" : "success", "username" : "{}".format(user_registered.username)})
+            return Response({"username" : "{}".format(user_registered.username)})
         except:
-            return Response({"result" : "failed"})
+            error['username'] = serializer.errors['username'][0]
+            return Response(error,status=status.HTTP_400_BAD_REQUEST)

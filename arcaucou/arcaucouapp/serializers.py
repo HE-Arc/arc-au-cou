@@ -18,4 +18,4 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ['name','password']
     def create(self, validated_data):
         return Group.objects.create(name=validated_data['name'],
-                                   password=make_password(validated_data['password']))
+                                    password=make_password(validated_data['password']))
