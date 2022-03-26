@@ -1,6 +1,6 @@
 <template>
-  <div class="font-sans bg-l-background dark:bg-d-background dark:text-d-text">
-    <div class="relative min-h-screen flex flex-col sm:justify-center items-center">
+  <div class="font-sans pt-52 sm:pt-0 bg-l-background dark:bg-d-background dark:text-d-text fixed w-full h-full top-0 left-0 z-0">
+    <div class="relative min-h-screen mx-auto w-10/12 flex flex-col sm:justify-center items-center">
         <div class="relative sm:max-w-sm w-full">
             <div class="card bg-l-10 dark:bg-d-10 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>
             <div class="card bg-l-10 dark:bg-d-10 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6"></div>
@@ -12,16 +12,16 @@
                     <div>
                         <input type="text" placeholder="Username" v-model="userData.username" class="mt-1 pl-3 block w-full border-none bg-l-background dark:bg-d-30 h-11 rounded-xl shadow-lg focus:border-d-10">
                     </div>
-
-                    <div class="mt-7">
+                    <br>
+                    <div>
                         <input type="email" placeholder="Email" v-model="userData.email" class="mt-1 pl-3 block w-full border-none bg-l-background dark:bg-d-30 h-11 rounded-xl shadow-lg focus:border-d-10">
                     </div>
-
-                    <div class="mt-7">
+                    <br>
+                    <div>
                         <input type="password" placeholder="Password" v-model="userData.password" class="mt-1 pl-3 block w-full border-none bg-l-background dark:bg-d-30 h-11 rounded-xl shadow-lg focus:border-d-10">
                     </div>
-
-                    <div class="mt">
+                    <br>
+                    <div>
                         <input type="password" placeholder="Confirm password" v-model="userData.password2" class="mt-1 pl-3 block w-full border-none bg-l-background dark:bg-d-30 h-11 rounded-xl shadow-lg focus:border-d-10">
                     </div>
 
