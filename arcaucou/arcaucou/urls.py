@@ -22,13 +22,13 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 router.register(r'user', views.UserViewSet)
 router.register(r'group', views.GroupViewSet)
-
+router.register(r'sudoku', views.SudokuViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('login',views.LoginView.as_view(),name='login'),
-    path('register',views.RegisterView.as_view(),name='register'),
+    path('login', views.LoginView.as_view(), name='login'),
+    path('register', views.RegisterView.as_view(), name='register'),
     path('', include(router.urls)),
 ]

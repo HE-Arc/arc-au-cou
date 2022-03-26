@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'arcaucou.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'arcaucou',
         'USER': 'djangouser',
         'PASSWORD': 'secret',
@@ -127,6 +128,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+# Cron jobs
+CRONJOBS = [
+    ('0 0 * * *', 'arcaucouapp.cron.generate_sudoku')
+]
 
 
 # Static files (CSS, JavaScript, Images)
