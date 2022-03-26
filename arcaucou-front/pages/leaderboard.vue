@@ -26,13 +26,10 @@
           <p>{{row[0]}}</p>
         </div>
         <div class="text-center">
-          <p>{{row[1]}}</p>
+          <p>{{$moment('2015-01-01').startOf('day').seconds(row[1]).format('mm:ss')}}</p>
         </div>
         <div class="text-center">
           <p>{{row[2]}}</p>
-        </div>
-        <div class="text-center">
-          <p>{{row[3]}}</p>
         </div>
       </div>
     </diV>
@@ -63,13 +60,10 @@
           <p>{{row[0]}}</p>
         </div>
         <div class="text-center">
-          <p>{{row[1]}}</p>
+          <p>{{$moment('2015-01-01').startOf('day').seconds(100000).format('mm:ss')}}</p>
         </div>
         <div class="text-center">
           <p>{{row[2]}}</p>
-        </div>
-        <div class="text-center">
-          <p>{{row[3]}}</p>
         </div>
       </div>
     </div>
@@ -99,7 +93,7 @@ export default {
   },
   data: function() {
     return {
-    dataLeaderboard :[["Bob", 500 , "Les arbres"],
+    dataLeaderboard :[["Bob", 1000 , "Les arbres"],
                       ["Bob", 500 , "Les arbres"],
                       ["Bob", 500 , "Les arbres"],
                       ["Bob", 500 , "Les arbres"],
