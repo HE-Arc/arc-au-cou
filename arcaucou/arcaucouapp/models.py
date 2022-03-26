@@ -95,7 +95,7 @@ class Sudoku(models.Model):
         Check if the user has completed the sudoku correctly
         """
         current_board = json.loads(board)
-        end_board = json.loads(self.end_sudoku)
+        end_board = self.format(json.loads(self.end_sudoku))
         return np.all(np.asarray(current_board) == np.asarray(end_board))
 
     def init_sudoku(self, code=None):
