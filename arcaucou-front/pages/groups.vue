@@ -57,12 +57,12 @@ export default {
   },
   data: function() {
     return {
-      groupsList: ['Les arbres', 'Les boufs'],
+      groupsList: [],
       groupData: {
         name: '',
         password: ''
       },
-      hasGroup: true,
+      hasGroup: false,
     }
   },
   methods:{
@@ -71,7 +71,10 @@ export default {
         this.$toasted.global.defaultSuccess({
             msg: this.groupData.name + " a été créé !"
         })
-        //.name
+        this.groupsList.push(this.groupData.name);
+        this.hasGroup = true;
+        this.groupData.name = '';
+        this.groupData.password = '';
       }).catch(error => {
         this.$toasted.global.defaultError({
             msg: "Oupss... le groupe n'a pas été créé !"
@@ -87,12 +90,13 @@ export default {
   },
   mounted() {
     this.$axios.get("/group/", {headers: {'Authorization': this.$store.state.token}}).then(result => {
-        console.log(result.data);
-      }).catch(error => {
-        this.$toasted.global.defaultError({
-            msg: "Oupss... problème serveur"
-        })
+
+      console.log(result.data);
+    }).catch(error => {
+      this.$toasted.global.defaultError({
+          msg: "Oupss... problème serveur"
       })
+    })
   }
 }
 </script>

@@ -31,8 +31,14 @@
 
         <div class="flex-1">
           <div class="flex justify-end items-center mr-5">
-            <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Sign in</NuxtLink>
-            <NuxtLink to="/register" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">Sign up</NuxtLink>
+            <div v-if="$auth.loggedIn">
+              <p>{{ $auth.user.username }}</p>
+            </div>
+            <div v-else>
+              <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Sign in</NuxtLink>
+              <NuxtLink to="/register" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">Sign up</NuxtLink>
+            </div>
+
             <button v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'"
             @click="$colorMode.preference = 'light'">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 dark:text-d-10" viewBox="0 0 20 20" fill="currentColor">

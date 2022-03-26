@@ -26,15 +26,15 @@ export default {
   ]),
   data: function() {
     return {
-    gridStart :[[3,0,6,5,2,0,0,8,7],
-              [5,0,8,0,0,0,0,0,0],
-              [4,0,0,0,0,0,0,3,1],
-              [0,0,3,9,0,0,0,5,0],
-              [0,1,8,6,3,0,0,9,0],
-              [0,8,0,0,5,6,0,0,0],
-              [1,3,0,0,0,0,0,0,5],
-              [0,0,0,0,0,0,2,0,6],
-              [2,5,0,0,7,4,3,0,0]],
+    gridStart :[[0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0]],
     started: false,
     isModal: false,
     isRunningTimer: false,
@@ -64,8 +64,8 @@ export default {
       stopConfetti() {
         this.$confetti.stop();
       },
-      setupGridObject(){
-        return this.gridStart.map((row) => {
+      setupGridObject(grid){
+        return grid.map((row) => {
           return row.map((element) => {
             return {value: element, isLocked: element != 0, isSelected: false}
           })
@@ -75,7 +75,16 @@ export default {
         this.isModal = !this.isModal
       },
       startGame: function(){
-        this.isRunningTimer = true
+        this.isRunningTimer = true;
+
+        this.$axios.get('/sudoku/get_sudoku').then(result => {
+          console.log(result.data.sudoku);
+          this.$store.commit('initGrid', this.setupGridObject(result.data.sudoku));
+        }).catch(error => {
+          this.$toasted.global.defaultError({
+            msg: 'Oupss... problème serveur'
+          })
+        })
       }
     },
     watch:{
@@ -86,7 +95,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('initGrid', this.setupGridObject());
+    this.$store.commit('initGrid', this.setupGridObject(this.gridStart));
   }
 }
 </script>

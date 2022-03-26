@@ -14,16 +14,14 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    { src: '~/plugins/vue-confetti.js', mode: 'client' },
-  ],
+  plugins: [{ src: '~/plugins/vue-confetti.js', mode: 'client' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,9 +31,8 @@ export default {
     '@nuxtjs/color-mode',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/auth',
     '@nuxtjs/toast',
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
   ],
   auth: {
     strategies: {
@@ -97,6 +94,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
 
   colorMode: {
