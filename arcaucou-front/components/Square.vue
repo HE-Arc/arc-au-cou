@@ -1,5 +1,5 @@
 <template>
-  <div class="text-3xl">
+  <div class="sm:text-3xl">
     <div @click="handleSelect" v-if="cell.value != 0" class="mx-auto dark:bg-d-30 border-2 dark:border-d-30 text-center h-10 w-10" :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10']">
       {{cell.value}}
     </div>
