@@ -1,6 +1,6 @@
 <template>
   <main class='mt-16 bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text fixed w-full h-full top-0 left-0 z-0'>
-    <div v-if="hasGroup" class="mx-auto w-1/4">
+    <div v-if="hasGroup" class="mx-auto px-3 md:w-1/2 2xl:w-1/4">
       <div class="grid grid-cols-2 mx-auto mt-10 gap-y-8">
         <div class="text-center col-span-2">
           <h2 class="text-2xl">Vos groupes</h2>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="mt-20 mx-auto w-1/4">
+    <div class="mt-20 mx-auto px-3 md:w-1/2 2xl:w-1/4">
       <h1 class="text-2xl">Rejoindre ou créer un groupe</h1>
       <br>
       <p>Rejoindre un groupe, vous permet de vous ... avec vos amis. Un classement spécial est reservé aux groupes en dessous du classement général.</p>
