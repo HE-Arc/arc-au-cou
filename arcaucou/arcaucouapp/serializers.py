@@ -1,34 +1,21 @@
-from arcaucouapp.models import User, Group
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from arcaucouapp.models import Group
 from rest_framework import serializers
-from django.contrib.auth.hashers import make_password, check_password
-
+from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ['username','email','password']
     def create(self, validated_data):
         return User.objects.create(email=validated_data['email'], 
                                    username=validated_data['username'], 
                                    password=make_password(validated_data['password']))
         
-class UserLoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['username','password']
-    def create(self, validated_data):
-        user = User.objects.filter(username=validated_data['username'])
-        print(user.values()[0]['password'])
-        print(validated_data['password'])
-        print(check_password(validated_data['password'],user.values()[0]['password']))
-        if check_password(validated_data['password'],user.values()[0]['password']):
-            return user.values()[0]
-        else:
-            return None
-
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['name','password']
+    def create(self, validated_data):
+        return Group.objects.create(name=validated_data['name'],
+                                   password=make_password(validated_data['password']))
