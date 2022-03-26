@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from arcaucouapp.models import Sudoku
@@ -29,5 +30,14 @@ class SudokuViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=False)
+    def generate_sudoku(self, request, pk=1):
+        sudoku = Sudoku.objects.get(pk=pk)
+        sudoku.generate()
+        sudoku.save()
+        return Response({'Sudoku': 'Sudoku generated at ' + sudoku.date.strftime("%d/%m/%Y, %H:%M:%S")})
+
+    @action(detail=False)
     def get_sudoku(self, request):
-        return Response({'Yo': 'Hello'})
+        sudoku = Sudoku.objects.get(pk=1)
+        return Response({'sudoku': sudoku.format(),
+                         'date': sudoku.date})
