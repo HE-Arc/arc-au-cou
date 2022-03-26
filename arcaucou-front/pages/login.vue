@@ -49,18 +49,22 @@ export default {
   },
   methods: {
     async handleLogin(){
-      try {
-        await this.$auth.loginWith('local', {"user":{"username": this.userData.username, "password": this.userData.password}})
-        //await this.$auth.$storage.setUniversal('email', response.data.email)
-        //await this.$auth.setUserToken(response.data.accestoken, reponse.data.refresh)
-        this.$toasted.global.defaultSuccess({
-          msg: 'Bienvenu ' + this.userData.username
-        })
-      } catch (err) {
+      await this.$axios.post('/login', {'username': this.userData.username, 'password': this.userData.password}).then(result =>{
+        this.$axios.post('/api-token-auth/', {'username': this.userData.username,"password": this.userData.password}).then((result) => {
+          this.$toasted.global.defaultSuccess({
+            msg: 'Login'
+          })
+          this.$store.commit('saveToken', result.data.token)
+        }).catch((error)=>{
+          this.$toasted.global.defaultError({
+            msg: 'Erreur serveur'
+          })
+        });
+      }).catch(error => {
         this.$toasted.global.defaultError({
-          msg: 'Oupsss... erreur lors de la connection'
+          msg: "Nom d'utilisateur ou mot de passe incorrect"
         })
-      }
+      })
     }
   }
 }

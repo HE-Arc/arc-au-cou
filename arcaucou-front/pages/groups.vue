@@ -67,7 +67,16 @@ export default {
   },
   methods:{
     handleCreate: function(){
-      console.log("Create");
+      this.$axios.post('/group/', {'name': this.groupData.name, 'password': this.groupData.name}, {headers: {'Authorization': this.$store.state.token}}).then(result => {
+        this.$toasted.global.defaultSuccess({
+            msg: this.groupData.name + " a été créé !"
+        })
+        //.name
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: "Oupss... le groupe n'a pas été créé !"
+        })
+      })
     },
     handleJoin: function(){
       console.log("Join");
@@ -75,6 +84,15 @@ export default {
     handleQuit: function(name){
       console.log(name);
     }
+  },
+  mounted() {
+    this.$axios.get("/group/", {headers: {'Authorization': this.$store.state.token}}).then(result => {
+        console.log(result.data);
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: "Oupss... problème serveur"
+        })
+      })
   }
 }
 </script>

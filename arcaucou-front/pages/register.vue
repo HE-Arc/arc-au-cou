@@ -59,15 +59,28 @@ export default {
   },
   methods:{
     handleRegister: async function(){
-      await this.$axios.post('/register', {"user":{"username": this.userData.username, "email": this.userData.email, "password": this.userData.password}}).then((result) => {
+      await this.$axios.post('/register', {"username": this.userData.username, "email": this.userData.email, "password": this.userData.password, "password2": this.userData.password2}).then((result) => {
         this.$toasted.global.defaultSuccess({
           msg: 'Votre compté à été créé'
-        })
-        console.log(result);
-      }).catch((err) => {
-        this.$toasted.global.defaultError({
-          msg: 'Oupsss... Erreur lors de la création du compte'
-        })
+        });
+
+        this.$axios.post('/api-token-auth/', {'username': this.userData.username,"password": this.userData.password}).then((result) => {
+          this.$toasted.global.defaultSuccess({
+            msg: 'Login'
+          })
+          this.$store.commit('saveToken', result.data.token)
+        }).catch((error)=>{
+          this.$toasted.global.defaultError({
+            msg: 'Erreur serveur'
+          })
+        });
+
+      }).catch((error) => {
+        Object.keys(error.response.data).forEach((key) => {
+          this.$toasted.global.defaultError({
+          msg: error.response.data[key]
+          })
+        });
       });
     },
   }

@@ -2,6 +2,7 @@ export const state = () => ({
   grid: [],
   time: 0,
   win: false,
+  userToken: null,
 })
 
 export const mutations = {
@@ -27,5 +28,8 @@ export const mutations = {
   },
   saveTime(state, value) {
     state.time = value
+  },
+  saveToken(state, token) {
+    state.token = 'Token ' + token
   },
 }

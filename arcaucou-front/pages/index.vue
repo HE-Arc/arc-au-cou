@@ -22,7 +22,7 @@ export default {
   },
   computed: mapState([
     'grid',
-    'win'
+    'win',
   ]),
   data: function() {
     return {
@@ -85,8 +85,8 @@ export default {
       this.toggleModal();
     }
   },
-    mounted() {
-      this.$store.commit('initGrid', this.setupGridObject());
-    }
+  mounted() {
+    this.$store.commit('initGrid', this.setupGridObject());
+  }
 }
 </script>
