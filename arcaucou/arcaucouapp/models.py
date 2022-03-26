@@ -3,6 +3,7 @@ import random
 import copy
 import datetime
 import json
+import numpy as np
 
 # Create your models here.
 
@@ -75,6 +76,14 @@ class Sudoku(models.Model):
                 third_square.clear()
 
         return formated_sudoku
+
+    def check_win(self, board):
+        """
+        Check if the user has completed the sudoku correctly
+        """
+        current_board = json.loads(board)
+        end_board = json.loads(self.end_sudoku)
+        return np.all(np.asarray(current_board) == np.asarray(end_board))
 
     def init_sudoku(self, code=None):
         """
