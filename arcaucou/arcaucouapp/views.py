@@ -66,7 +66,7 @@ class SudokuViewSet(viewsets.ModelViewSet):
     API endpoint that allows to get the sudoku of the day and to solve it.
     """
     queryset = Sudoku.objects.all()
-    serializer_class = SudokuSerializer    
+    serializer_class = SudokuSerializer
 
     @action(detail=False)
     def generate_sudoku(self, request, pk=1):
@@ -95,5 +95,4 @@ class SudokuViewSet(viewsets.ModelViewSet):
         """
         sudoku = Sudoku.objects.get(pk=1)
         # Need to be replaced by the user sudoku and a check for the time needs to be done
-        print(request)
         return Response({'result': sudoku.check_win(request.data['sudoku'])})
