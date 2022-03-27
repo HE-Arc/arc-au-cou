@@ -28,25 +28,28 @@ export const mutations = {
   async changeValue(state, data) {
     state.grid[data.x][data.y].value = data.number
     this.commit('checkLastCell')
+    console.log(state.lastCell)
     if (state.lastCell) {
+      console.log('ok')
       await axios
         .post('/sudoku/check_sudoku', { sudoku: state.grid })
         .then((result) => {
           console.log(result)
-          state.win = true
+          //state.win = true
         })
         .catch((error) => {
-          state.win = false
+          //state.win = false
         })
     }
   },
   checkLastCell(state) {
+    let good = true
     state.grid.forEach((row, i) => {
       row.forEach((cell, j) => {
-        if (cell.value === 0) return
+        if (cell.value === 0) good = false
       })
     })
-    state.lastCell = true
+    state.lastCell = good
   },
   saveTime(state, value) {
     state.time = value
