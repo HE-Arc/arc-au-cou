@@ -15,7 +15,7 @@ class Leaderboard(models.Model):
     time = models.DecimalField(max_digits=10, decimal_places=0)
 
 class Group(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
 
 class UserToGroup(models.Model):
