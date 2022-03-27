@@ -67,7 +67,9 @@ export default {
   },
   methods:{
     handleCreate: function(){
-      this.$axios.post('/group/', {'name': this.groupData.name, 'password': this.groupData.name}, {headers: {'Authorization': this.$store.state.token}}).then(result => {
+      this.$axios.post('/group/',
+        {'name': this.groupData.name, 'password': this.groupData.name},
+        ).then(result => {
         this.$toasted.global.defaultSuccess({
             msg: this.groupData.name + " a été créé !"
         })
@@ -89,9 +91,11 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get("/group/", {headers: {'Authorization': this.$store.state.token}}).then(result => {
-
-      console.log(result.data);
+    this.$axios.get("/group/").then(result => {
+      result.data.forEach(name => {
+        this.groupsList.push(name.name);
+      });
+      this.hasGroup = true;
     }).catch(error => {
       this.$toasted.global.defaultError({
           msg: "Oupss... problème serveur"
