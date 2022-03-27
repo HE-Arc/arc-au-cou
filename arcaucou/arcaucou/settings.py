@@ -141,6 +141,7 @@ CRONJOBS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATIC_ROOT = '/var/www/arcaucou/'
 STATIC_URL = '/var/www/arcaucou/shared/env/lib/python3.8/site-packages/rest_framework/static/'
 
 # Default primary key field type
