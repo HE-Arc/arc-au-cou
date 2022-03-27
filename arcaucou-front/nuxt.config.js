@@ -50,7 +50,7 @@ export default {
           logout: false,
           user: false,
         },
-        tokenType: 'Token ',
+        tokenType: 'Token',
       },
       redirect: {
         login: '/login',

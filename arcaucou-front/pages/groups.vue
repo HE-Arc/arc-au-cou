@@ -75,19 +75,46 @@ export default {
         })
         this.groupsList.push(this.groupData.name);
         this.hasGroup = true;
-        this.groupData.name = '';
-        this.groupData.password = '';
+        this.resetForm();
       }).catch(error => {
         this.$toasted.global.defaultError({
-            msg: "Oupss... le groupe n'a pas été créé !"
+            msg: "Oupss... le nom du groupe existe déjà !"
         })
       })
     },
     handleJoin: function(){
-      console.log("Join");
+      this.$axios.post('/group/joingroup/',
+        {'name': this.groupData.name, 'password': this.groupData.name},
+        ).then(result => {
+        this.$toasted.global.defaultSuccess({
+            msg: "Vous avez rejoind " + this.groupData.name
+        })
+        this.groupsList.push(this.groupData.name);
+        this.hasGroup = true;
+        this.resetForm();
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: error.response.data.failed
+        })
+      })
     },
     handleQuit: function(name){
-      console.log(name);
+      this.$axios.post('/group/leavegroup/',
+        {'name': name},
+        ).then(result => {
+        this.$toasted.global.defaultSuccess({
+            msg: "Vous avez quitter " + name
+        })
+        this.resetForm();
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: error.response.data.failed
+        })
+      })
+    },
+    resetForm: function(){
+      this.groupData.name = '';
+      this.groupData.password = '';
     }
   },
   mounted() {
