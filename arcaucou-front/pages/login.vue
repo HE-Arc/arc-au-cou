@@ -6,7 +6,7 @@
             <div class="card bg-l-10 dark:bg-d-10 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-6"></div>
             <div class="relative w-full rounded-3xl  px-6 py-4 bg-l-60 dark:bg-d-60 shadow-md">
                 <h1 class="block mt-3 text-xl text-center font-semibold">
-                    Login
+                    Connexion
                 </h1>
                 <form @submit.prevent="handleLogin" class="mt-10">
                     <div>
@@ -50,16 +50,21 @@ export default {
   methods: {
     async handleLogin(){
       await this.$axios.post('/login', {'username': this.userData.username, 'password': this.userData.password}).then(result =>{
-        this.$axios.post('/api-token-auth/', {'username': this.userData.username,"password": this.userData.password}).then((result) => {
+        try {
+          this.$auth.loginWith('local', {
+            data: this.userData
+          })
+          this.$auth.setUser(this.userData);
           this.$toasted.global.defaultSuccess({
-            msg: 'Login'
+            msg: "Bienvenu " + this.userData.username
           })
-          this.$store.commit('saveToken', result.data.token)
-        }).catch((error)=>{
+          console.log(this.$auth.user);
+        } catch (error) {
+          console.log(error)
           this.$toasted.global.defaultError({
-            msg: 'Erreur serveur'
+            msg: "Oupss... une erreur est survenu"
           })
-        });
+        }
       }).catch(error => {
         this.$toasted.global.defaultError({
           msg: "Nom d'utilisateur ou mot de passe incorrect"
