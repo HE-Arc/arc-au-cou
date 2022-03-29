@@ -1,9 +1,13 @@
 <template>
   <div class="text-3xl">
-    <div @click="handleSelect" v-if="cell.value != 0" class="mx-auto dark:bg-d-30 border-2 dark:border-d-background text-center h-10 w-10" :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10']">
+    <div @click="handleSelect" v-if="cell.value != 0"
+    class="mx-auto dark:bg-d-30 border-2 dark:border-d-background text-center h-10 w-10"
+    :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10', this.cell.isLocked ? 'dark:text-d-10 text-l-text' : 'text-d-text']">
       {{cell.value}}
     </div>
-    <div @click="handleSelect" v-if="cell.value === 0" class="mx-auto dark:bg-d-30 border-2 dark:border-d-background text-center h-10 w-10" :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10']">
+    <div @click="handleSelect" v-if="cell.value === 0"
+    class="mx-auto dark:bg-d-30 border-2 dark:border-d-background text-center h-10 w-10"
+    :class="[!this.cell.isSelected ? 'border-d-text' : 'dark:border-d-10', this.cell.isLocked ? 'dark:text-d-10 text-l-text' : 'text-d-text']">
 
     </div>
   </diV>
@@ -21,7 +25,7 @@ export default {
       if (this.cell.isSelected){
         let typed = parseInt(String.fromCharCode(e.keyCode),10);
         if(!typed) return;
-        this.$store.commit('changeValue', {x:this.posX, y:this.posY, number:typed})
+        this.$store.commit('changeValue', typed)
       }
     },
     handleSelect: function(){

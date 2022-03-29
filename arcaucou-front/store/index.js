@@ -6,6 +6,7 @@ export const state = () => ({
   win: false,
   wrong: false,
   lastCell: false,
+  cellSelected: {x: -1, y:-1}
 })
 
 export const mutations = {
@@ -19,28 +20,28 @@ export const mutations = {
       row.forEach((cell, j) => {
         if (i === data.x && j === data.y) {
           cell.isSelected = true
+          this.commit('setSelectedCell', { x: i, y: j })
         } else {
           cell.isSelected = false
         }
       })
     })
   },
-  async changeValue(state, data) {
-    state.grid[data.x][data.y].value = data.number
+  async changeValue(state, number) {
+    state.grid[state.selectCell.x][state.selectCell.y].value = number
     this.commit('checkLastCell')
-    console.log(state.lastCell)
     if (state.lastCell) {
       console.log('ok')
-      state.commit('setWrong', false)
+      this.commit('setWrong', false)
       await axios
         .post('/sudoku/check_sudoku', { sudoku: state.grid })
         .then((result) => {
           console.log(result)
-          state.commit('setWin', true)
+          this.commit('setWin', true)
         })
         .catch((error) => {
-          state.commit('setWin', false)
-          state.commit('setWrong', true)
+          this.commit('setWin', false)
+          this.commit('setWrong', true)
         })
     }
   },
@@ -62,4 +63,7 @@ export const mutations = {
   setWrong(state, value) {
     state.wrong = value
   },
+  setSelectedCell(state, value) {
+    state.selectCell = value;
+  }
 }
