@@ -4,7 +4,7 @@ export const state = () => ({
   grid: [],
   time: 0,
   win: false,
-  userToken: null,
+  wrong: false,
   lastCell: false,
 })
 
@@ -31,14 +31,16 @@ export const mutations = {
     console.log(state.lastCell)
     if (state.lastCell) {
       console.log('ok')
+      state.commit('setWrong', false)
       await axios
         .post('/sudoku/check_sudoku', { sudoku: state.grid })
         .then((result) => {
           console.log(result)
-          //state.win = true
+          state.commit('setWin', true)
         })
         .catch((error) => {
-          //state.win = false
+          state.commit('setWin', false)
+          state.commit('setWrong', true)
         })
     }
   },
@@ -54,7 +56,10 @@ export const mutations = {
   saveTime(state, value) {
     state.time = value
   },
-  saveToken(state, token) {
-    state.token = 'Token ' + token
+  setWin(state, value) {
+    state.win = value
+  },
+  setWrong(state, value) {
+    state.wrong = value
   },
 }

@@ -58,11 +58,9 @@ export default {
           this.$toasted.global.defaultSuccess({
             msg: "Bienvenu " + this.userData.username
           })
-          console.log(this.$auth.user);
         } catch (error) {
-          console.log(error)
           this.$toasted.global.defaultError({
-            msg: "Oupss... une erreur est survenu"
+            msg: "Oupss... une erreur est survenue"
           })
         }
       }).catch(error => {

@@ -23,6 +23,7 @@ export default {
   computed: mapState([
     'grid',
     'win',
+    'wrong',
   ]),
   data: function() {
     return {
@@ -58,7 +59,7 @@ export default {
           windSpeedMax: 0,
           dropRate: 5
         });
-        setTimeout(()=>{this.stopConfetti()}, 2000);
+        setTimeout(()=>{this.stopConfetti()}, 2500);
       },
 
       stopConfetti() {
@@ -75,14 +76,12 @@ export default {
         this.isModal = !this.isModal
       },
       startGame: function(){
-        this.isRunningTimer = true;
-
         this.$axios.get('/sudoku/get_sudoku').then(result => {
-          console.log(result.data.sudoku);
+          this.isRunningTimer = true;
           this.$store.commit('initGrid', this.setupGridObject(result.data.sudoku));
         }).catch(error => {
           this.$toasted.global.defaultError({
-            msg: 'Oupss... problème serveur'
+            msg: 'Oupss... une erreur est survenue'
           })
         })
       }
@@ -92,6 +91,13 @@ export default {
       this.startConfetti();
       this.isRunningTimer = false;
       this.toggleModal();
+    },
+    wrong: function(){
+      if(wrong){
+        this.$toasted.global.defaultError({
+            msg: "Le sudoku n'est pas correct !"
+          })
+      }
     }
   },
   mounted() {
