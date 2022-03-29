@@ -18,7 +18,10 @@ export default {
   name: 'index',
   head() {
     return {
-      title: 'Arc Au Cou'
+      title: 'Arc Au Cou',
+      bodyAttrs: {
+        class:'scrollbar-thin scrollbar-thumb-d-10 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+      }
     };
   },
   computed: mapState([
