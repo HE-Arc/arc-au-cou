@@ -7,6 +7,8 @@ import json
 import numpy as np
 
 # Create your models here.
+
+
 class Leaderboard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Date is added automatically
@@ -14,13 +16,16 @@ class Leaderboard(models.Model):
     # Time in milliseconds
     time = models.DecimalField(max_digits=10, decimal_places=0)
 
+
 class Group(models.Model):
     name = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
 
+
 class UserToGroup(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
 
 class Sudoku(models.Model):
     """
