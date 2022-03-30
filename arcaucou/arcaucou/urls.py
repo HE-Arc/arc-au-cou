@@ -22,6 +22,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 router.register(r'group', views.GroupViewSet)
 router.register(r'sudoku', views.SudokuViewSet)
+router.register(r'user', views.UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
