@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from arcaucouapp.models import Sudoku, Group, Leaderboard, UserToGroup
-from arcaucouapp.serializers import UserSerializer, SudokuSerializer, GroupSerializer, UserToGroupSerializer, GroupListSerializer, LeaderboardSerializer
+from arcaucouapp.serializers import UserSerializer, UserListSerializer, SudokuSerializer, GroupSerializer, UserToGroupSerializer, GroupListSerializer, LeaderboardSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets, mixins, status
@@ -10,7 +10,25 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.    
+# Create your views here.  
+class UserViewSet(mixins.ListModelMixin,
+                  viewsets.GenericViewSet):
+    '''
+    '''
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+    permission_classes = [IsAuthenticated]
+    def list(self, request, *args, **kwargs):
+        token = request.META.get('HTTP_AUTHORIZATION')[6:]
+        try:
+            user = Token.objects.get(key=token).user
+        except User.DoesNotExist:
+            user = None
+        if user is not None:
+            return Response({'username':user.username,'email':user.email},status=status.HTTP_200_OK)
+        return Response({'failed':'L\'utilisateur n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
+        
+  
 class GroupViewSet(mixins.CreateModelMixin,
                    mixins.ListModelMixin,
                    viewsets.GenericViewSet):
@@ -21,6 +39,16 @@ class GroupViewSet(mixins.CreateModelMixin,
         if self.action == 'list':
             return GroupListSerializer
         return GroupSerializer
+    
+    def list(self, request, *args, **kwargs):
+        '''
+        '''
+        token = request.META.get('HTTP_AUTHORIZATION')[6:]
+        user_id = Token.objects.get(key=token).user.id
+        groups_id = UserToGroup.objects.filter(user=user_id).values('group')
+        groups = Group.objects.filter(id__in=groups_id).values("name")
+        groups_name = [x['name'] for x in groups]
+        return Response(groups_name,status=status.HTTP_200_OK)
     
     def create(self, request, *args, **kwargs):
         response = super().create(request, *args, **kwargs)
@@ -35,22 +63,24 @@ class GroupViewSet(mixins.CreateModelMixin,
             if user_to_group is not None:
                 return Response(status=status.HTTP_200_OK)
             else:
-                return Response({'failed':'User could not join group'},status=status.HTTP_400_BAD_REQUEST)
+                return Response({'failed':'L\'utilisateur n\'a pas pu rejoindre le groupe'},status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['post'])
     def joingroup(self, request):
         group_data = request.data
         token = request.META.get('HTTP_AUTHORIZATION')[6:]
         user_id = Token.objects.get(key=token).user.id
-        group = Group.objects.get(name=group_data['name'])
-        print(check_password(group_data['password'],group.password))
+        try:
+            group = Group.objects.get(name=group_data['name'])
+        except Group.DoesNotExist:
+            group = None
         if group is not None and check_password(group_data['password'],group.password):
             try:
                 user_to_group = UserToGroup.objects.get(user=user_id, group=group.id)
             except UserToGroup.DoesNotExist:
                 user_to_group = None
             if user_to_group is not None:
-                return Response({'failed':'User is already in group'},status=status.HTTP_400_BAD_REQUEST)
+                return Response({'failed':'L\'utilisateur est déjà dans ce groupe'},status=status.HTTP_400_BAD_REQUEST)
             ids = {'user':user_id, 'group':group.id}
             serializer = UserToGroupSerializer(data=ids)
             if serializer.is_valid():
@@ -58,17 +88,20 @@ class GroupViewSet(mixins.CreateModelMixin,
                 if user_to_group is not None:
                     return Response(status=status.HTTP_200_OK)
                 else:
-                    return Response({'failed':'User could not join group'},status=status.HTTP_400_BAD_REQUEST)
+                    return Response({'failed':'L\'utilisateur n\'a pas pu rejoindre le groupe'},status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'failed':'Given data is not of a valid format'},status=status.HTTP_400_BAD_REQUEST)
-        return Response({'failed':'The group does not exist or the password is wrong'},status=status.HTTP_400_BAD_REQUEST)
+                return Response({'failed':'Les informations données ne sont pas valides'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'failed':'Le groupe n\'existe pas ou le mot de passe est faux'},status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=False, methods=['post'])
     def leavegroup(self, request):
         group_data = request.data
         token = request.META.get('HTTP_AUTHORIZATION')[6:]
         user_id = Token.objects.get(key=token).user.id
-        group = Group.objects.get(name=group_data['name'])
+        try:
+            group = Group.objects.get(name=group_data['name'])
+        except Group.DoesNotExist:
+            group = None
         if group is not None:
             try:
                 user_to_group = UserToGroup.objects.get(user=user_id, group=group.id)
@@ -84,8 +117,8 @@ class GroupViewSet(mixins.CreateModelMixin,
                     pass
                 return Response(status=status.HTTP_200_OK)
             else:
-                return Response({'failed':'The user is not part of the group'},status=status.HTTP_400_BAD_REQUEST)
-        return Response({'failed':'The group does not exist'},status=status.HTTP_400_BAD_REQUEST)
+                return Response({'failed':'L\'utilisateur ne fait pas partie de ce groupe'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'failed':'Le groupe n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
     
 class LeaderboardViewSet(mixins.CreateModelMixin,
                    mixins.ListModelMixin,
@@ -109,7 +142,7 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=user)
         error = {}
         if user['password'] != user['password2']:
-            error["password"] = "Password fields didn't match."
+            error["password"] = "Les mots de passe ne correspondent pas."
         if serializer.is_valid():
             user_registered = serializer.save()
         try:
