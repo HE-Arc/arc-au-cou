@@ -1,5 +1,5 @@
 <template>
-  <main class='min-h-screen mt-16 bg-l-background dark:bg-d-background text-l-text dark:text-d-text w-full h-full top-0 left-0 z-0'>
+  <main class='min-h-screen bg-l-background dark:bg-d-background text-l-text dark:text-d-text w-full h-full top-0 left-0 z-0'>
     <Timer :running="this.isRunningTimer" class="pt-10 mb-4"/>
     <div class="mx-auto w-1/2 h-20 text-center">
       <button v-if="!this.isRunningTimer" @click="this.startGame" class="text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-10">Commencer</button>
@@ -20,7 +20,7 @@ export default {
     return {
       title: 'Arc Au Cou',
       bodyAttrs: {
-        class:'scrollbar-thin scrollbar-thumb-d-10 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+        class:'scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
       }
     };
   },
@@ -109,6 +109,22 @@ export default {
   },
   mounted() {
     this.$store.commit('initGrid', this.setupGridObject(this.gridStart));
+    window.addEventListener('keydown', (e) =>{
+      switch(e.key){
+        case 'ArrowUp':
+          this.$store.commit('moveSelectCell', 'up')
+          break;
+        case 'ArrowDown':
+          this.$store.commit('moveSelectCell', 'down')
+          break;
+        case 'ArrowLeft':
+          this.$store.commit('moveSelectCell', 'left')
+          break;
+        case 'ArrowRight':
+          this.$store.commit('moveSelectCell', 'right')
+          break;
+      }
+    });
   }
 }
 </script>

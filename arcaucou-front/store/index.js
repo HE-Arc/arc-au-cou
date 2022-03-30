@@ -27,6 +27,43 @@ export const mutations = {
       })
     })
   },
+  moveSelectCell(state, direction) {
+    let newSelected = {x:state.selectCell.x, y:state.selectCell.y}
+    switch (direction) {
+      case 'right':
+        if (newSelected.y === 2 || newSelected.y === 5 || newSelected.y === 8) {
+          newSelected.x += 1
+          newSelected.y -= 2
+        } else {
+          newSelected.y += 1
+        }
+        break
+      case 'left':
+        if (newSelected.y === 0 || newSelected.y === 3 || newSelected.y === 6) {
+          newSelected.x -= 1
+          newSelected.y += 2
+        } else {
+          newSelected.y -= 1
+        }
+        break
+      case 'up':
+        if (newSelected.y === 0 || newSelected.y === 1 || newSelected.y === 2) {
+          newSelected.x -= 3
+          newSelected.y += 6
+        } else {
+          newSelected.y -= 3
+        }
+        break
+      case 'down':
+        if (newSelected.y === 6 || newSelected.y === 7 || newSelected.y === 8) {
+          newSelected.x += 3
+          newSelected.y -= 6
+        } else {
+          newSelected.y += 3
+        }
+    }
+    this.commit('selectCell', newSelected)
+  },
   async changeValue(state, number) {
     state.grid[state.selectCell.x][state.selectCell.y].value = number
     this.commit('checkLastCell')
