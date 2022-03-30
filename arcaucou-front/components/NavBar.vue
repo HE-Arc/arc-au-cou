@@ -31,12 +31,13 @@
 
         <div class="flex-1">
           <div class="flex justify-end items-center mr-5">
-            <div v-if="$auth.loggedIn">
-              <p>{{ $auth.user.username }}</p>
+            <div v-if="$auth.loggedIn" class="flex">
+              <p>{{ this.$auth.user.username }}</p>
+              <button @click="this.handleLogout" class="text-gray-800 text-sm font-semibold ml-5 mr-4">Déconnection</button>
             </div>
             <div v-else>
-              <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Sign in</NuxtLink>
-              <NuxtLink to="/register" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">Sign up</NuxtLink>
+              <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Connection</NuxtLink>
+              <NuxtLink to="/register" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">S'inscrire</NuxtLink>
             </div>
 
             <button v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'"
@@ -62,6 +63,11 @@
 <script>
 export default {
   colorMode: 'dark',
+  methods:{
+    handleLogout: function() {
+      this.$auth.logout();
+    }
+  }
 }
 </script>
 

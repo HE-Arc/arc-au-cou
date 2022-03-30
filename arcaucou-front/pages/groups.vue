@@ -67,31 +67,62 @@ export default {
   },
   methods:{
     handleCreate: function(){
-      this.$axios.post('/group/', {'name': this.groupData.name, 'password': this.groupData.name}, {headers: {'Authorization': this.$store.state.token}}).then(result => {
+      this.$axios.post('/group/',
+        {'name': this.groupData.name, 'password': this.groupData.name},
+        ).then(result => {
         this.$toasted.global.defaultSuccess({
             msg: this.groupData.name + " a été créé !"
         })
         this.groupsList.push(this.groupData.name);
         this.hasGroup = true;
-        this.groupData.name = '';
-        this.groupData.password = '';
+        this.resetForm();
       }).catch(error => {
         this.$toasted.global.defaultError({
-            msg: "Oupss... le groupe n'a pas été créé !"
+            msg: "Oupss... le nom du groupe existe déjà !"
         })
       })
     },
     handleJoin: function(){
-      console.log("Join");
+      this.$axios.post('/group/joingroup/',
+        {'name': this.groupData.name, 'password': this.groupData.name},
+        ).then(result => {
+        this.$toasted.global.defaultSuccess({
+            msg: "Vous avez rejoind " + this.groupData.name
+        })
+        this.groupsList.push(this.groupData.name);
+        this.hasGroup = true;
+        this.resetForm();
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: error.response.data.failed
+        })
+      })
     },
     handleQuit: function(name){
-      console.log(name);
+      this.$axios.post('/group/leavegroup/',
+        {'name': name},
+        ).then(result => {
+        this.$toasted.global.defaultSuccess({
+            msg: "Vous avez quitter " + name
+        })
+        this.resetForm();
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: error.response.data.failed
+        })
+      })
+    },
+    resetForm: function(){
+      this.groupData.name = '';
+      this.groupData.password = '';
     }
   },
   mounted() {
-    this.$axios.get("/group/", {headers: {'Authorization': this.$store.state.token}}).then(result => {
-
-      console.log(result.data);
+    this.$axios.get("/group/").then(result => {
+      result.data.forEach(name => {
+        this.groupsList.push(name.name);
+      });
+      this.hasGroup = true;
     }).catch(error => {
       this.$toasted.global.defaultError({
           msg: "Oupss... problème serveur"

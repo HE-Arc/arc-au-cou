@@ -54,7 +54,7 @@ class GroupViewSet(mixins.CreateModelMixin,
         response = super().create(request, *args, **kwargs)
         instance = response.data
         group = Group.objects.get(name=instance['name'])
-        token = request.META.get('HTTP_AUTHORIZATION')[6:]
+        token = request.META.get('HTTP_AUTHORIZATION')[6:]        
         user_id = Token.objects.get(key=token).user.id
         ids = {'user':user_id, 'group':group.id}
         serializer = UserToGroupSerializer(data=ids)

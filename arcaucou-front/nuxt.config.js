@@ -37,32 +37,26 @@ export default {
   auth: {
     strategies: {
       local: {
-        scheme: 'refresh',
-        localStorage: {
-          prefix: 'auth.',
-        },
         token: {
-          prefix: 'access_token.',
-          property: 'access_token',
-          maxAge: 86400,
-          type: 'Bearer',
-        },
-        refreshToken: {
-          prefix: 'refresh_token.',
-          property: 'refresh_token',
-          data: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 15,
-        },
-        user: {
-          property: 'user',
-          autoFetch: true,
+          property: 'token',
+          maxAge: 2629800, //One month*/
         },
         endpoints: {
-          login: { url: '/login', method: 'post' },
-          refresh: { url: '/token/refresh/', method: 'post' },
-          user: { url: '/user', method: 'get' },
-          logout: { url: '/logout', method: 'post' },
+          login: {
+            url: '/api-token-auth/',
+            method: 'post',
+            propertyName: 'token',
+          },
+          logout: false,
+          user: false,
         },
+        tokenType: 'Token',
+      },
+      redirect: {
+        login: '/login',
+        logout: '/',
+        callback: '/login',
+        home: '/',
       },
     },
   },
@@ -112,4 +106,5 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  target: 'static'
 }
