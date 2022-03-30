@@ -124,7 +124,8 @@ export default {
           this.$store.commit('moveSelectCell', 'right')
           break;
       }
-    });
+      e.preventDefault();
+    }, false);
   }
 }
 </script>
