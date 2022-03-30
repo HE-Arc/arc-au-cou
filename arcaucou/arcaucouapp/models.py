@@ -304,7 +304,7 @@ class Sudoku(models.Model):
 
                 _counter += 1
 
-        return self.board, full_board
+        return json.dumps(self.board), json.dumps(full_board)
 # endregion
 
 # region Solve

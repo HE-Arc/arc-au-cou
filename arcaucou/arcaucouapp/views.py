@@ -153,9 +153,11 @@ class SudokuViewSet(viewsets.ModelViewSet):
         Give the sudoku of the day to the user
         """
         sudoku = None
-        if Sudoku.objects.filter(pk=1).count():
-            sudoku = Sudoku.objects.create(
-                start_sudoku="", end_sudoku="", date=datetime.datetime.now())
+        if not Sudoku.objects.filter(pk=1).exists():
+            sudoku = Sudoku.objects.create(id=1,
+                                           start_sudoku="", end_sudoku="", date=datetime.datetime.now())
+            sudoku.generate()
+            sudoku.save()
         else:
             sudoku = Sudoku.objects.get(pk=1)
         return Response({'sudoku': sudoku.format(),
@@ -167,5 +169,4 @@ class SudokuViewSet(viewsets.ModelViewSet):
         Verify if the user has correctly completed the sudoku
         """
         sudoku = Sudoku.objects.get(pk=1)
-        # Need to be replaced by the user sudoku and a check for the time needs to be done
         return Response({'result': sudoku.check_win(request.data['sudoku'])})

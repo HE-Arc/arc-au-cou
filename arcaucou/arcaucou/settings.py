@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True;
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'arcaucou.urls'
 
@@ -93,8 +93,11 @@ DATABASES = {
         'NAME': 'arcaucou',
         'USER': 'arcaucou',
         'PASSWORD': 'Z8V853dBvAHm',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306',
+        'OPTIONS': {
+            'ssl_mode': 'DISABLED'
+        }
     }
 }
 
