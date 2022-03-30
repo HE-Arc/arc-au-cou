@@ -25,7 +25,7 @@ class UserViewSet(mixins.ListModelMixin,
         except User.DoesNotExist:
             user = None
         if user is not None:
-            return Response({'username':user.username,'email':user.email},status=status.HTTP_200_OK)
+            return Response({'user': {'username':user.username,'email':user.email}},status=status.HTTP_200_OK)
         return Response({'failed':'L\'utilisateur n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
         
   

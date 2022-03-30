@@ -33,10 +33,10 @@
           <div class="flex justify-end items-center mr-5">
             <div v-if="$auth.loggedIn" class="flex">
               <p>{{ this.$auth.user.username }}</p>
-              <button @click="this.handleLogout" class="text-gray-800 text-sm font-semibold ml-5 mr-4">Déconnection</button>
+              <button @click="this.handleLogout" class="text-gray-800 text-sm font-semibold ml-5 mr-4">Déconnexion</button>
             </div>
             <div v-else>
-              <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Connection</NuxtLink>
+              <NuxtLink to="/login" class="text-gray-800 text-sm font-semibold mr-4">Connexion</NuxtLink>
               <NuxtLink to="/register" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">S'inscrire</NuxtLink>
             </div>
 

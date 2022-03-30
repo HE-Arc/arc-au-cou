@@ -6,8 +6,14 @@ export const state = () => ({
   win: false,
   wrong: false,
   lastCell: false,
-  cellSelected: {x: -1, y:-1}
+  cellSelected: { x: -1, y: -1 },
 })
+
+export const getters = {
+  getTime(state) {
+    return state.time
+  },
+}
 
 export const mutations = {
   initGrid(state, gridStart) {
@@ -28,7 +34,7 @@ export const mutations = {
     })
   },
   moveSelectCell(state, direction) {
-    let newSelected = {x:state.selectCell.x, y:state.selectCell.y}
+    let newSelected = { x: state.selectCell.x, y: state.selectCell.y }
     switch (direction) {
       case 'right':
         if (newSelected.y === 2 || newSelected.y === 5 || newSelected.y === 8) {
@@ -93,14 +99,19 @@ export const mutations = {
   },
   saveTime(state, value) {
     state.time = value
+    /*this.$cookies.set('sudoku-time', value, {
+      path: '/',
+      maxAge: age,
+    })*/
   },
   setWin(state, value) {
     state.win = value
+    //Axios save time
   },
   setWrong(state, value) {
     state.wrong = value
   },
   setSelectedCell(state, value) {
-    state.selectCell = value;
-  }
+    state.selectCell = value
+  },
 }

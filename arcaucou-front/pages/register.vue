@@ -1,5 +1,5 @@
 <template>
-  <div class="font-sans pt-52 sm:pt-0 bg-l-background dark:bg-d-background dark:text-d-text fixed w-full h-full top-0 left-0 z-0">
+  <div class="font-sans pt-52 sm:pt-0 bg-l-background dark:bg-d-background dark:text-d-text w-full h-full top-0 left-0 z-0">
     <div class="relative min-h-screen mx-auto w-10/12 flex flex-col sm:justify-center items-center">
         <div class="relative sm:max-w-sm w-full">
             <div class="card bg-l-10 dark:bg-d-10 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-6"></div>

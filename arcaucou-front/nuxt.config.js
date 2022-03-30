@@ -48,7 +48,14 @@ export default {
             propertyName: 'token',
           },
           logout: false,
-          user: false,
+          user: {
+            url: '/user/',
+            method: 'get',
+            propertyName: 'user',
+          },
+        },
+        user: {
+          property: 'user',
         },
         tokenType: 'Token',
       },
@@ -57,6 +64,7 @@ export default {
         logout: '/',
         callback: '/login',
         home: '/',
+        user: '/',
       },
     },
   },
@@ -89,6 +97,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    'cookie-universal-nuxt',
   ],
 
   colorMode: {
@@ -106,5 +115,5 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  target: 'static'
+  target: 'static',
 }
