@@ -74,10 +74,14 @@ export const mutations = {
     state.grid[state.selectCell.x][state.selectCell.y].value = number
     this.commit('checkLastCell')
     if (state.lastCell) {
-      console.log('ok')
       this.commit('setWrong', false)
+      const sudoku = state.grid.map(block => {
+        return block.map(cell => {
+          return cell.value
+        })
+      })
       await axios
-        .post('api/sudoku/check_sudoku/', { sudoku: state.grid })
+        .post('api/sudoku/check_sudoku/', { sudoku: sudoku })
         .then((result) => {
           console.log(result)
           this.commit('setWin', true)
