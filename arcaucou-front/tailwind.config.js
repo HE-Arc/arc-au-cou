@@ -13,6 +13,11 @@ module.exports = {
       'l-10': '#00DC82',
       'l-text': '#000',
       red: '#ba0000',
+      gray: '#808080',
     },
+  },
+  plugins: [require('tailwind-scrollbar')],
+  variants: {
+    scrollbar: ['dark', 'rounded'],
   },
 }

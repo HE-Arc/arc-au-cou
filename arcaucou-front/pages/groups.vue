@@ -24,7 +24,7 @@
     <div class="mt-20 mx-auto px-3 md:w-1/2 2xl:w-1/4">
       <h1 class="text-2xl">Rejoindre ou créer un groupe</h1>
       <br>
-      <p>Rejoindre un groupe, vous permet de vous ... avec vos amis. Un classement spécial est reservé aux groupes en dessous du classement général.</p>
+      <p>Rejoindre un groupe, vous permet de vous mesurer à vos amis. Un classement spécial est reservé aux groupes en dessous du classement général.</p>
       <br>
       <div class="mt-4">
           <input type="text" v-model="groupData.name" placeholder="Nom du groupe" class="mt-1 pl-3 block w-full border-l-10 border-2 bg-l-background dark:border-d-30 dark:bg-d-30 h-11 rounded-xl shadow-lg dark:focus:border-d-10 focus:border-d-10">
@@ -50,6 +50,7 @@
 export default {
   layout:'main',
   name: 'groups',
+  middleware: 'auth',
   head() {
     return {
       title: 'Arc Au Cou - Groups'
@@ -66,6 +67,19 @@ export default {
     }
   },
   methods:{
+    getGroups: function(){
+      this.groupsList = []
+      this.$axios.get("/group/").then(result => {
+        result.data.forEach(name => {
+          this.groupsList.push(name);
+        });
+        this.hasGroup = true;
+      }).catch(error => {
+        this.$toasted.global.defaultError({
+            msg: "Oupss... problème serveur"
+        })
+      })
+    },
     handleCreate: function(){
       this.$axios.post('/group/',
         {'name': this.groupData.name, 'password': this.groupData.name},
@@ -73,9 +87,9 @@ export default {
         this.$toasted.global.defaultSuccess({
             msg: this.groupData.name + " a été créé !"
         })
-        this.groupsList.push(this.groupData.name);
         this.hasGroup = true;
         this.resetForm();
+        this.getGroups();
       }).catch(error => {
         this.$toasted.global.defaultError({
             msg: "Oupss... le nom du groupe existe déjà !"
@@ -89,9 +103,9 @@ export default {
         this.$toasted.global.defaultSuccess({
             msg: "Vous avez rejoind " + this.groupData.name
         })
-        this.groupsList.push(this.groupData.name);
         this.hasGroup = true;
         this.resetForm();
+        this.getGroups();
       }).catch(error => {
         this.$toasted.global.defaultError({
             msg: error.response.data.failed
@@ -106,6 +120,7 @@ export default {
             msg: "Vous avez quitter " + name
         })
         this.resetForm();
+        this.getGroups();
       }).catch(error => {
         this.$toasted.global.defaultError({
             msg: error.response.data.failed
@@ -118,16 +133,7 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get("/group/").then(result => {
-      result.data.forEach(name => {
-        this.groupsList.push(name.name);
-      });
-      this.hasGroup = true;
-    }).catch(error => {
-      this.$toasted.global.defaultError({
-          msg: "Oupss... problème serveur"
-      })
-    })
+    this.getGroups();
   }
 }
 </script>

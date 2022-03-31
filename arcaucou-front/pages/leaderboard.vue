@@ -1,5 +1,5 @@
 <template>
-  <main class='mt-16 bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text fixed w-full h-full top-0 left-0 z-0'>
+  <main class='bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text w-full h-full top-0 left-0 z-0'>
     <div class="pt-20 sm:pt-6 mx-auto sm:w-1/2">
       <div class="grid grid-cols-4 mt-10 mx-auto mb-5">
         <div class="text-center col-span-4 mb-5">

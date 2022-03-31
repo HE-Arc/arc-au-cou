@@ -12,6 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
         return User.objects.create(email=validated_data['email'],
                                    username=validated_data['username'],
                                    password=make_password(validated_data['password']))
+        
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
