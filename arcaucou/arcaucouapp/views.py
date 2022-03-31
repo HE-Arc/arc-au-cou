@@ -193,7 +193,7 @@ class SudokuViewSet(viewsets.ModelViewSet):
         return Response({'sudoku': sudoku.format(),
                          'date': sudoku.date})
 
-    @action(detail=False)
+    @action(detail=False, methods=['post'])
     def check_sudoku(self, request):
         """
         Verify if the user has correctly completed the sudoku
