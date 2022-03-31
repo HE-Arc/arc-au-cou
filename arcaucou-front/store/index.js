@@ -77,7 +77,7 @@ export const mutations = {
       console.log('ok')
       this.commit('setWrong', false)
       await axios
-        .post('/sudoku/check_sudoku', { sudoku: state.grid })
+        .post('api/sudoku/check_sudoku', { sudoku: state.grid })
         .then((result) => {
           console.log(result)
           this.commit('setWin', true)
