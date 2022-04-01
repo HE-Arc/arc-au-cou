@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.auth.models import User
 from arcaucouapp.models import Sudoku, Group, Leaderboard, UserToGroup
-from arcaucouapp.serializers import UserSerializer, UserListSerializer, SudokuSerializer, GroupSerializer, UserToGroupSerializer, GroupListSerializer, LeaderboardSerializer
+from arcaucouapp.serializers import UserSerializer, UserListSerializer, SudokuSerializer, GroupSerializer, UserToGroupSerializer, LeaderboardSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets, mixins, status
@@ -9,9 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import IsAuthenticated
 import json
-
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # Create your views here.  
 class UserViewSet(mixins.ListModelMixin,
@@ -37,11 +36,6 @@ class GroupViewSet(mixins.CreateModelMixin,
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return GroupListSerializer
-        return GroupSerializer
     
     def list(self, request, *args, **kwargs):
         '''
@@ -130,9 +124,55 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
                          viewsets.GenericViewSet):
     queryset = Leaderboard.objects.all()
     serializer_class = LeaderboardSerializer
-    permission_classes = [IsAuthenticated]
-
-
+    
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'list' or self.action == "list_group":
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+    
+    def list(self, request, *args, **kwargs):
+        '''
+        '''
+        return Response(Leaderboard.objects.all().values("user__username","time","date"),status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def list_group(self, request, *args, **kwargs):
+        '''
+        '''
+        group_data = request.data
+        try:
+            group = Group.objects.get(name=group_data['name'])
+        except Group.DoesNotExist:
+            group = None
+        if group is not None:
+            users_id = UserToGroup.objects.filter(group=group.id).values('user')
+            print(users_id)
+            return Response(Leaderboard.objects.filter(user__id__in=users_id).values("user__username","time","date"),status=status.HTTP_200_OK)
+        return Response({'failed':'Le groupe n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
+    
+    def create(self, request, *args, **kwargs):
+        '''
+        '''
+        leaderboard_data = request.data
+        token = request.META.get('HTTP_AUTHORIZATION')[6:]
+        user_id = Token.objects.get(key=token).user.id
+        data_ = {'user':user_id,'time':leaderboard_data['time']}
+        serializer = LeaderboardSerializer(data=data_)
+        if serializer.is_valid():
+            leaderboard = serializer.save()
+            if leaderboard is not None:
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response({'failed':'L\'entrée dans le leaderboard n\'a pas pu être faite'},status=status.HTTP_400_BAD_REQUEST)
+        if serializer.errors['non_field_errors'][0].code == 'unique':
+            return Response({'failed':'Le joueur a déjà joué aujourd\'hui'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'failed':'Les données ne sont pas valides'},status=status.HTTP_400_BAD_REQUEST)
+        
 class LoginView(APIView):
     def post(self, request, format=None):
         user = request.data
