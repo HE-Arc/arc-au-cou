@@ -75,21 +75,12 @@ export const mutations = {
     this.commit('checkLastCell')
     if (state.lastCell) {
       this.commit('setWrong', false)
-      const sudoku = state.grid.map(block => {
-        return block.map(cell => {
+      const sudoku = state.grid.map((block) => {
+        return block.map((cell) => {
           return cell.value
         })
       })
-      await axios
-        .post('api/sudoku/check_sudoku/', { sudoku: sudoku })
-        .then((result) => {
-          console.log(result)
-          this.commit('setWin', true)
-        })
-        .catch((error) => {
-          this.commit('setWin', false)
-          this.commit('setWrong', true)
-        })
+      this.dispatch('CHECK_SUDOKU', sudoku)
     }
   },
   checkLastCell(state) {
@@ -117,5 +108,26 @@ export const mutations = {
   },
   setSelectedCell(state, value) {
     state.selectCell = value
+  },
+}
+
+export const actions = {
+  async CHECK_SUDOKU(state, sudoku) {
+    await axios
+      .post('http://localhost:8000/api/sudoku/check_sudoku/', {
+        sudoku: sudoku,
+      })
+      .then((result) => {
+        if (result.data.result) {
+          this.commit('setWin', true)
+        } else {
+          this.commit('setWin', false)
+          this.commit('setWrong', true)
+        }
+      })
+      .catch((error) => {
+        this.commit('setWin', false)
+        this.commit('setWrong', true)
+      })
   },
 }

@@ -114,9 +114,9 @@ export default {
   watch:{
     win:function(){
       this.startConfetti();
-      this.isRunningTimer = false;
       this.alreadyPlay = true;
       this.toggleModal();
+      this.startCooldown();
 
       let today = new Date()
       let tomorrow = new Date(today)
@@ -131,10 +131,10 @@ export default {
       })
     },
     wrong: function(){
-      if(wrong){
+      if(this.wrong){
         this.$toasted.global.defaultError({
             msg: "Le sudoku n'est pas correct !"
-          })
+        })
       }
     },
   },
