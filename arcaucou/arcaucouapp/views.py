@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+import json
 
 
 # Create your views here.  
@@ -190,7 +191,7 @@ class SudokuViewSet(viewsets.ModelViewSet):
             sudoku.save()
         else:
             sudoku = Sudoku.objects.get(pk=1)
-        return Response({'sudoku': sudoku.format(),
+        return Response({'sudoku': sudoku.format(json.loads(sudoku.start_sudoku)),
                          'date': sudoku.date})
 
     @action(detail=False, methods=['post'])

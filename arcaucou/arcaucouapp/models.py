@@ -7,8 +7,6 @@ import json
 import numpy as np
 
 # Create your models here.
-
-
 class Leaderboard(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Date is added automatically
@@ -16,16 +14,13 @@ class Leaderboard(models.Model):
     # Time in milliseconds
     time = models.DecimalField(max_digits=10, decimal_places=0)
 
-
 class Group(models.Model):
     name = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
 
-
 class UserToGroup(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-
 
 class Sudoku(models.Model):
     """
@@ -44,12 +39,10 @@ class Sudoku(models.Model):
             self.__generate_random_complete_board())
         self.date = datetime.datetime.now()
 
-    def format(self):
+    def format(self, current_board):
         """
         Format the sudoku so each array in the 2d array represent a square of the sudoku
-        """
-        # Get the current sudoku and get it in a list
-        current_board = json.loads(self.start_sudoku)
+        """        
         # The sudoku in a formated form
         formated_sudoku = []
         # Temporary list which will contain a line of the sudoku
@@ -93,7 +86,7 @@ class Sudoku(models.Model):
     def check_win(self, board):
         """
         Check if the user has completed the sudoku correctly
-        """        
+        """
         end_board = self.format(json.loads(self.end_sudoku))
         return np.all(np.asarray(board) == np.asarray(end_board))
 
@@ -303,7 +296,7 @@ class Sudoku(models.Model):
 
                 _counter += 1
 
-        return json.dumps(self.board), json.dumps(full_board)
+        return self.board, full_board
 # endregion
 
 # region Solve
