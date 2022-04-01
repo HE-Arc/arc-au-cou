@@ -91,10 +91,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'arcaucou',
-        'USER': 'djangouser',
-        'PASSWORD': 'secret',
-        'HOST': 'localhost',
-        'PORT': '3306',        
+        'USER': 'arcaucou',
+        'PASSWORD': 'Z8V853dBvAHm',
+        'HOST': 'mysql',
+        'PORT': '3306',
+        'OPTIONS': {
+            'ssl_mode': 'DISABLED'
+        }    
     }
 }
 

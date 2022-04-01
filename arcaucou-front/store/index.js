@@ -114,9 +114,12 @@ export const mutations = {
 export const actions = {
   async CHECK_SUDOKU(state, sudoku) {
     await axios
-      .post('http://localhost:8000/api/sudoku/check_sudoku/', {
-        sudoku: sudoku,
-      })
+      .post(
+        'https://https://arcaucou.srvz-webapp.he-arc.ch//api/sudoku/check_sudoku/',
+        {
+          sudoku: sudoku,
+        }
+      )
       .then((result) => {
         if (result.data.result) {
           this.commit('setWin', true)
