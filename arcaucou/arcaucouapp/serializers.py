@@ -32,18 +32,13 @@ class SudokuSerializer(serializers.HyperlinkedModelSerializer):
         model = Sudoku
         fields = ['url', 'start_sudoku', 'end_sudoku', 'date']
         
-class GroupListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['name']
-        
 class LeaderboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Leaderboard
         fields = '__all__'
     def create(self, validated_data):
-        return Leaderboard.objects.create(date=validated_data['date'],
-                                          time=validated_data['time'],
+        print(validated_data)
+        return Leaderboard.objects.create(time=validated_data['time'],
                                           user=validated_data['user'])
         
 class UserToGroupSerializer(serializers.ModelSerializer):

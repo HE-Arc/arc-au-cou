@@ -13,6 +13,8 @@ class Leaderboard(models.Model):
     date = models.DateField(auto_now_add=True)
     # Time in milliseconds
     time = models.DecimalField(max_digits=10, decimal_places=0)
+    class Meta:
+        unique_together = ('user', 'date',)
 
 class Group(models.Model):
     name = models.CharField(max_length=255, unique=True)
