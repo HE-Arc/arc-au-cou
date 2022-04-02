@@ -3,7 +3,7 @@
     <Timer :isClock="this.isClock" :isCooldown="this.isCooldown" :timeCooldown="this.timeCooldown" :isSave="this.isSave" class="pt-10 mb-4"/>
     <div v-if="!this.alreadyPlay">
       <div class="mx-auto w-1/2 h-20 text-center">
-        <button v-if="!this.isClock || !this.isCooldown" @click="this.startGame" class="text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-10">Commencer</button>
+        <button v-if="!this.isClock && !this.alreadyPlay " @click="this.startGame" class="text-sm font-semibold border px-4 py-2 rounded-lg hover:border-l-10">Commencer</button>
       </diV>
       <SudokuGrid class="mb-10" :gridStart="this.grid"/>
       <NumPav @handlePavNum="this.handlePavNum"/>
