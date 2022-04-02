@@ -4,68 +4,65 @@
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
     <div class="text-center text-2xl my-auto">
-      <p v-if="!this.nextGame">{{$moment('2015-01-01').startOf('day').seconds(time).format('mm:ss')}}</p>
-      <p v-else>{{$moment('2015-01-01').startOf('day').seconds(timeLeft).format('hh:mm:ss')}}</p>
+      <p v-if="!isCooldown">{{$moment('2015-01-01').startOf('day').seconds(time).format('mm:ss')}}</p>
+      <p v-else>{{$moment('2015-01-01').locale('fr-ch').startOf('day').seconds(timeLeft).format('LTS')}}</p>
     </diV>
   </div>
 </template>
 
 <script>
+import 'moment/locale/fr-ch';
 export default {
   name:"timer",
   props:{
-    running: {
-      type: Boolean,
-      default: true
-    },
-    nextGame: {
-      type: Boolean,
-      default: false
-    },
-    secondsStart: {
-      type: Number,
-    },
-    timer: {
-      type: Function
-    },
-    clock: {
-      type: Function
-    }
+    isClock: Boolean,
+    isCooldown: Boolean,
+    isSave: Boolean,
+    timeCooldown: Number,
   },
   data: function(){
     return {
       time: 0,
       timeLeft: 0,
+      clock: {
+        type: Function
+      },
+      cooldown: {
+        type: Function
+      }
     }
   },
   methods: {
-    startTimer: function(){
-      this.timer = setInterval(() => {
+    startClock: function(){
+      this.clock = setInterval(() => {
         this.time++;
       }, 1000);
     },
     startCooldown: function(){
-      this.clock = setInterval(() => {
+      this.cooldown = setInterval(() => {
         this.timeLeft--;
       }, 1000);
     },
-    reset: function(){
-      clearInterval(this.timer);
-      this.time = 0;
+    resetClock: function(){
       clearInterval(this.clock);
-      this.time = 0;
     }
   },
   watch:{
-    running:function(){
-      if(this.running && !this.nextGame){
-        this.startTimer();
-      }else if(this.running && this.nextGame){
-        this.timeLeft = this.secondsStart
+    isClock:function(){
+      if(this.clock){
+        this.startClock();
+      }
+    },
+    isCooldown: function(){
+      if(this.isCooldown){
+        this.timeLeft = this.timeCooldown
         this.startCooldown();
-      }else{
+      }
+    },
+    isSave: function(){
+      if(this.isSave){
         this.$store.commit('saveTime', this.time);
-        this.reset();
+        this.resetClock();
       }
     }
   },

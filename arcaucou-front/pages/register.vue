@@ -44,7 +44,10 @@ export default {
   name: 'register',
   head() {
     return {
-      title: 'Arc Au Cou - Register'
+      title: 'Arc Au Cou - Inscription',
+      bodyAttrs: {
+        class:'scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+      }
     };
   },
   data: function(){

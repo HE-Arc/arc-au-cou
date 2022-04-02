@@ -36,7 +36,10 @@ export default {
   name: 'login',
   head() {
     return {
-      title: 'Arc Au Cou - Login'
+      title: 'Arc Au Cou - Connexion',
+      bodyAttrs: {
+        class:'scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+      }
     };
   },
   data: function(){

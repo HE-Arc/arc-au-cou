@@ -9,12 +9,6 @@ export const state = () => ({
   cellSelected: { x: -1, y: -1 },
 })
 
-export const getters = {
-  getTime(state) {
-    return state.time
-  },
-}
-
 export const mutations = {
   initGrid(state, gridStart) {
     state.grid = gridStart.map((arr) => {
@@ -71,16 +65,18 @@ export const mutations = {
     this.commit('selectCell', newSelected)
   },
   async changeValue(state, number) {
-    state.grid[state.selectCell.x][state.selectCell.y].value = number
-    this.commit('checkLastCell')
-    if (state.lastCell) {
-      this.commit('setWrong', false)
-      const sudoku = state.grid.map((block) => {
-        return block.map((cell) => {
-          return cell.value
+    if (!state.win) {
+      state.grid[state.selectCell.x][state.selectCell.y].value = number
+      this.commit('checkLastCell')
+      if (state.lastCell) {
+        this.commit('setWrong', false)
+        const sudoku = state.grid.map((block) => {
+          return block.map((cell) => {
+            return cell.value
+          })
         })
-      })
-      this.dispatch('CHECK_SUDOKU', sudoku)
+        this.dispatch('CHECK_SUDOKU', sudoku)
+      }
     }
   },
   checkLastCell(state) {
@@ -94,10 +90,6 @@ export const mutations = {
   },
   saveTime(state, value) {
     state.time = value
-    /*this.$cookies.set('sudoku-time', value, {
-      path: '/',
-      maxAge: age,
-    })*/
   },
   setWin(state, value) {
     state.win = value
