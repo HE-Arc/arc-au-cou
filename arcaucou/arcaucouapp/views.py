@@ -140,7 +140,7 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
         '''
         return Response(Leaderboard.objects.all().values("user__username","time","date"),status=status.HTTP_200_OK)
     
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['post'])
     def list_group(self, request, *args, **kwargs):
         '''
         '''
