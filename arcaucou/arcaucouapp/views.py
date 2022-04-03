@@ -11,6 +11,7 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 import json
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from datetime import datetime
 
 # Create your views here.  
 class UserViewSet(mixins.ListModelMixin,
@@ -138,7 +139,7 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
     def list(self, request, *args, **kwargs):
         '''
         '''
-        return Response(Leaderboard.objects.all().order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
+        return Response(Leaderboard.objects.filter(date=datetime.today().strftime('%Y-%m-%d')).order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['post'])
     def list_group(self, request, *args, **kwargs):
@@ -152,7 +153,7 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
         if group is not None:
             users_id = UserToGroup.objects.filter(group=group.id).values('user')
             print(users_id)
-            return Response(Leaderboard.objects.filter(user__id__in=users_id).order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
+            return Response(Leaderboard.objects.filter(user__id__in=users_id,date=datetime.today().strftime('%Y-%m-%d')).order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
         return Response({'failed':'Le groupe n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
     
     def create(self, request, *args, **kwargs):
