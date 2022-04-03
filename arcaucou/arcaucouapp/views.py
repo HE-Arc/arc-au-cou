@@ -138,7 +138,7 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
     def list(self, request, *args, **kwargs):
         '''
         '''
-        return Response(Leaderboard.objects.all().values("user__username","time","date"),status=status.HTTP_200_OK)
+        return Response(Leaderboard.objects.all().order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['get'])
     def list_group(self, request, *args, **kwargs):
@@ -152,7 +152,7 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
         if group is not None:
             users_id = UserToGroup.objects.filter(group=group.id).values('user')
             print(users_id)
-            return Response(Leaderboard.objects.filter(user__id__in=users_id).values("user__username","time","date"),status=status.HTTP_200_OK)
+            return Response(Leaderboard.objects.filter(user__id__in=users_id).order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
         return Response({'failed':'Le groupe n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
     
     def create(self, request, *args, **kwargs):
