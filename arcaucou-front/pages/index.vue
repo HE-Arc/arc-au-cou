@@ -1,5 +1,5 @@
 <template>
-  <main class='min-h-screen bg-l-background dark:bg-d-background text-l-text dark:text-d-text w-full h-full top-0 left-0 z-0'>
+  <main class='text-l-text dark:text-d-text'>
     <Timer :isClock="this.isClock" :isCooldown="this.isCooldown" :timeCooldown="this.timeCooldown" :isSave="this.isSave" class="pt-10 mb-4"/>
     <div v-if="!this.alreadyPlay">
       <div class="mx-auto w-1/2 h-20 text-center">
@@ -25,7 +25,7 @@ export default {
     return {
       title: 'Arc Au Cou',
       bodyAttrs: {
-        class:'scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+        class:'bg-l-background dark:bg-d-background scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
       }
     };
   },

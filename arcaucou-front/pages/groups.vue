@@ -1,5 +1,5 @@
 <template>
-  <main class='bg-l-background min-h-screen dark:bg-d-background text-l-text dark:text-d-text w-full h-full top-0 left-0 z-0'>
+  <main class='text-l-text dark:text-d-text'>
     <div v-if="hasGroup" class="mx-auto px-3 pt-20 sm:pt-6 sm:px-6 md:w-1/2 2xl:w-1/4">
       <div class="grid grid-cols-2 mx-auto mt-10 gap-y-8">
         <div class="text-center col-span-2">
@@ -55,7 +55,7 @@ export default {
     return {
       title: 'Arc Au Cou - Groupe',
       bodyAttrs: {
-        class:'scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+        class:'bg-l-background dark:bg-d-background scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
       }
     };
   },
