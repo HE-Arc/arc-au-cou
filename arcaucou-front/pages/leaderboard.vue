@@ -2,7 +2,7 @@
   <div>
     <NavBar :leaderboard="true" />
     <main class='text-l-text dark:text-d-text'>
-      <div class="pt-20 sm:pt-6 mx-auto sm:w-1/2">
+      <div class="mt-20 mx-auto sm:w-1/2">
         <div class="grid grid-cols-3 mt-10 mx-auto mb-5">
           <div class="text-center col-span-3 mb-5">
             <h2 class="text-3xl">Classement général</h2>
@@ -17,15 +17,17 @@
             <p>Temps</p>
           </div>
         </div>
-        <div class="grid grid-cols-3  mx-auto mb-2" v-for="(row,index) in dataLeaderboard" :key="index">
-          <div class="text-center text-2xl">
-            <p>{{index+1}}</p>
-          </div>
-          <div class="text-center text-2xl">
-            <p>{{row[0]}}</p>
-          </div>
-          <div class="text-center text-2xl">
-            <p>{{$moment('2015-01-01').startOf('day').seconds(row[1]).format('mm:ss')}}</p>
+        <div class="maxHeight scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+          <div class="grid grid-cols-3 mx-auto mb-2" v-for="(row,index) in dataLeaderboard" :key="index">
+            <div class="text-center text-2xl">
+              <p>{{index+1}}</p>
+            </div>
+            <div class="text-center text-2xl">
+              <p>{{row[0]}}</p>
+            </div>
+            <div class="text-center text-2xl">
+              <p>{{$moment('2015-01-01').startOf('day').seconds(row[1]).format('mm:ss')}}</p>
+            </div>
           </div>
         </div>
       </diV>
@@ -53,15 +55,17 @@
             <p>Temps</p>
           </div>
         </div>
-        <div class="grid grid-cols-3  mx-auto mb-2" v-for="(row,index) in dataLeaderboardGroup" :key="index">
-          <div class="text-center text-2xl">
-            <p>{{index+1}}</p>
-          </div>
-          <div class="text-center text-2xl">
-            <p>{{row[0]}}</p>
-          </div>
-          <div class="text-center text-2xl">
-            <p>{{$moment('2015-01-01').startOf('day').seconds(row[1]).format('mm:ss')}}</p>
+        <div class="maxHeight scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+          <div class="grid grid-cols-3  mx-auto mb-2" v-for="(row,index) in dataLeaderboardGroup" :key="index">
+            <div class="text-center text-2xl">
+              <p>{{index+1}}</p>
+            </div>
+            <div class="text-center text-2xl">
+              <p>{{row[0]}}</p>
+            </div>
+            <div class="text-center text-2xl">
+              <p>{{$moment('2015-01-01').startOf('day').seconds(row[1]).format('mm:ss')}}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +84,12 @@
     </main>
   </div>
 </template>
+
+<style scoped>
+.maxHeight{
+  max-height: 25rem;
+}
+</style>
 
 <script>
 export default {
