@@ -115,19 +115,22 @@ export default {
       this.isCooldown = true;
     },
     saveToLeaderBoard: function(){
-      this.$axios.post('/leaderboard/', {'time': this.time})
-      this.timeSave = true;
-      let today = new Date()
-      let tomorrow = new Date(today)
-      tomorrow.setDate(tomorrow.getDate() + 1)
-      tomorrow.setHours(0)
-      tomorrow.setMinutes(0)
-      tomorrow.setSeconds(0)
-      const age = Math.abs(today - tomorrow) / 1000
-      this.$cookies.set('sudoku-win', true, {
-        path: '/',
-        maxAge: age,
-      })
+      if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
+        console.log('prout')
+        this.$axios.post('/leaderboard/', {'time': this.time})
+        this.timeSave = true;
+        let today = new Date()
+        let tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        tomorrow.setHours(0)
+        tomorrow.setMinutes(0)
+        tomorrow.setSeconds(0)
+        const age = Math.abs(today - tomorrow) / 1000
+        this.$cookies.set('sudoku-win', true, {
+          path: '/',
+          maxAge: age,
+        })
+      }
     }
   },
   watch:{
@@ -150,9 +153,7 @@ export default {
     }
   },
   updated(){
-    if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
-      this.saveToLeaderBoard()
-    }
+    this.saveToLeaderBoard()
   },
   mounted() {
     const cookieWin = this.$cookies.get('sudoku-win');
