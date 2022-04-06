@@ -8,7 +8,7 @@
       <SudokuGrid class="mb-10" :gridStart="this.grid"/>
       <NumPav @handlePavNum="this.handlePavNum"/>
     </div>
-    <div v-else class="mx-auto w-1/2 text-center">
+    <div v-else class="mx-auto w-full p-2 text-center">
       <p class="text-3xl">Revenez demain pour une nouvelle partie !</p>
     </diV>
     <Modal v-show="isModal" @close-modal="isModal = false"/>
@@ -116,7 +116,6 @@ export default {
     },
     saveToLeaderBoard: function(){
       if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
-        console.log('prout')
         this.$axios.post('/leaderboard/', {'time': this.time})
         this.timeSave = true;
         let today = new Date()
