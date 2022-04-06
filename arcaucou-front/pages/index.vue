@@ -8,7 +8,7 @@
       <SudokuGrid class="mb-10" :gridStart="this.grid"/>
       <NumPav @handlePavNum="this.handlePavNum"/>
     </div>
-    <div v-else class="mx-auto w-1/2 text-center">
+    <div v-else class="mx-auto w-full p-2 text-center">
       <p class="text-3xl">Revenez demain pour une nouvelle partie !</p>
     </diV>
     <Modal v-show="isModal" @close-modal="isModal = false"/>
@@ -115,19 +115,21 @@ export default {
       this.isCooldown = true;
     },
     saveToLeaderBoard: function(){
-      this.$axios.post('/leaderboard/', {'time': this.time})
-      this.timeSave = true;
-      let today = new Date()
-      let tomorrow = new Date(today)
-      tomorrow.setDate(tomorrow.getDate() + 1)
-      tomorrow.setHours(0)
-      tomorrow.setMinutes(0)
-      tomorrow.setSeconds(0)
-      const age = Math.abs(today - tomorrow) / 1000
-      this.$cookies.set('sudoku-win', true, {
-        path: '/',
-        maxAge: age,
-      })
+      if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
+        this.$axios.post('/leaderboard/', {'time': this.time})
+        this.timeSave = true;
+        let today = new Date()
+        let tomorrow = new Date(today)
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        tomorrow.setHours(0)
+        tomorrow.setMinutes(0)
+        tomorrow.setSeconds(0)
+        const age = Math.abs(today - tomorrow) / 1000
+        this.$cookies.set('sudoku-win', true, {
+          path: '/',
+          maxAge: age,
+        })
+      }
     }
   },
   watch:{
@@ -150,9 +152,7 @@ export default {
     }
   },
   updated(){
-    if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
-      this.saveToLeaderBoard()
-    }
+    this.saveToLeaderBoard()
   },
   mounted() {
     const cookieWin = this.$cookies.get('sudoku-win');
