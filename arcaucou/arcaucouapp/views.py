@@ -152,7 +152,6 @@ class LeaderboardViewSet(mixins.CreateModelMixin,
             group = None
         if group is not None:
             users_id = UserToGroup.objects.filter(group=group.id).values('user')
-            print(users_id)
             return Response(Leaderboard.objects.filter(user__id__in=users_id,date=datetime.today().strftime('%Y-%m-%d')).order_by('time').values("user__username","time","date"),status=status.HTTP_200_OK)
         return Response({'failed':'Le groupe n\'existe pas'},status=status.HTTP_400_BAD_REQUEST)
     
@@ -197,7 +196,9 @@ class RegisterView(APIView):
         try:
             return Response({"username": "{}".format(user_registered.username)}, status=status.HTTP_200_OK)
         except:
-            error['username'] = serializer.errors['username'][0]
+            print(serializer.errors)
+            for k in serializer.errors.keys():
+                error[k] = serializer.errors[k][0]
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 
