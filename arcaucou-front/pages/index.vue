@@ -1,5 +1,5 @@
 <template>
-  <main class='text-l-text dark:text-d-text'>
+  <main class='text-l-text dark:text-d-text focus:outline-none' tabindex="0" @keydown="moveCell">
     <Timer :isClock="this.isClock" :isCooldown="this.isCooldown" :timeCooldown="this.timeCooldown" :isSave="this.isSave" class="pt-10 mb-4"/>
     <div v-if="!this.alreadyPlay">
       <div class="mx-auto w-1/2 h-20 text-center">
@@ -130,6 +130,26 @@ export default {
           maxAge: age,
         })
       }
+    },
+    moveCell: function(event){
+      switch(event.key){
+        case 'ArrowUp':
+          event.preventDefault();
+          this.$store.commit('moveSelectCell', 'up')
+          break;
+        case 'ArrowDown':
+          event.preventDefault();
+          this.$store.commit('moveSelectCell', 'down')
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          this.$store.commit('moveSelectCell', 'left')
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          this.$store.commit('moveSelectCell', 'right')
+          break;
+      }
     }
   },
   watch:{
@@ -158,26 +178,6 @@ export default {
     const cookieWin = this.$cookies.get('sudoku-win');
     if(!cookieWin){
       this.$store.commit('initGrid', this.setupGridObject(this.gridStart));
-      window.addEventListener('keydown', (e) =>{
-        switch(e.key){
-          case 'ArrowUp':
-            e.preventDefault();
-            this.$store.commit('moveSelectCell', 'up')
-            break;
-          case 'ArrowDown':
-            e.preventDefault();
-            this.$store.commit('moveSelectCell', 'down')
-            break;
-          case 'ArrowLeft':
-            e.preventDefault();
-            this.$store.commit('moveSelectCell', 'left')
-            break;
-          case 'ArrowRight':
-            e.preventDefault();
-            this.$store.commit('moveSelectCell', 'right')
-            break;
-        }
-      });
     }else{
       this.startCooldown();
     }
