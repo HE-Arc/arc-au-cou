@@ -52,7 +52,7 @@
           <div class="flex justify-end items-center mr-5">
             <div v-if="$auth.loggedIn" class="hidden sm:flex">
               <p class="text-xl font-semibold">{{ this.$auth.user.username }}</p>
-              <button @click="this.handleLogout" class="dark:text-d-text dark:hover:text-d-10 text-xl font-semibold ml-5 mr-4">Déconnexion</button>
+              <button @click="this.handleLogout" class="dark:text-d-text dark:hover:text-d-10 hover:text-d-text text-xl font-semibold ml-5 mr-4">Déconnexion</button>
             </div>
             <div v-else class="hidden sm:block">
               <NuxtLink to="/login" class="dark:text-d-text dark:hover:text-d-10 text-xl font-semibold mr-4">Connexion</NuxtLink>

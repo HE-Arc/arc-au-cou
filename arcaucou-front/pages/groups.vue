@@ -37,10 +37,10 @@
         </div>
 
         <div class="mt-7 flex mb-10">
-            <button @click="handleCreate" class="w-1/2 bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+            <button @click="handleCreate" class="w-1/2 font-semibold text-d-text bg-l-60 dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                 Créer
             </button>
-            <button @click="handleJoin" class="w-full ml-5 bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+            <button @click="handleJoin" class="w-full ml-5 font-semibold text-d-text bg-l-60 dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                 Rejoindre
             </button>
         </div>

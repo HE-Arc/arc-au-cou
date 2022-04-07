@@ -7,6 +7,18 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+        extra_kwargs = {
+            "username": {
+                "error_messages": {
+                    "unique": "Le nom d'utilisateur existe déjà"
+                }
+            },
+            "email": {
+                "error_messages": {
+                    "invalid": "L'email n'est pas valide"
+                }
+            }
+        }
 
     def create(self, validated_data):
         return User.objects.create(email=validated_data['email'],

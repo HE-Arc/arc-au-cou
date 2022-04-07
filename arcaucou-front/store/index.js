@@ -32,32 +32,53 @@ export const mutations = {
     switch (direction) {
       case 'right':
         if (newSelected.y === 2 || newSelected.y === 5 || newSelected.y === 8) {
-          newSelected.x += 1
-          newSelected.y -= 2
+          if (newSelected.x === 2 || newSelected.x === 5 || newSelected.x === 8) {
+            newSelected.x -= 2
+            newSelected.y -= 2
+          } else {
+            newSelected.x += 1
+            newSelected.y -= 2
+          }
+
         } else {
           newSelected.y += 1
         }
         break
       case 'left':
         if (newSelected.y === 0 || newSelected.y === 3 || newSelected.y === 6) {
-          newSelected.x -= 1
-          newSelected.y += 2
+          if (newSelected.x === 0 || newSelected.x === 3 || newSelected.x === 6) {
+            newSelected.x += 2
+            newSelected.y += 2
+          } else {
+            newSelected.x -= 1
+            newSelected.y += 2
+          }
         } else {
           newSelected.y -= 1
         }
         break
       case 'up':
         if (newSelected.y === 0 || newSelected.y === 1 || newSelected.y === 2) {
-          newSelected.x -= 3
-          newSelected.y += 6
+          if (newSelected.x === 0 || newSelected.x === 1 || newSelected.x === 2) {
+            newSelected.x += 6
+            newSelected.y += 6
+          } else {
+            newSelected.x -= 3
+            newSelected.y += 6
+          }
         } else {
           newSelected.y -= 3
         }
         break
       case 'down':
         if (newSelected.y === 6 || newSelected.y === 7 || newSelected.y === 8) {
-          newSelected.x += 3
-          newSelected.y -= 6
+          if (newSelected.x === 6 || newSelected.x === 7 || newSelected.x === 8) {
+            newSelected.x -= 6
+            newSelected.y -= 6
+          } else {
+            newSelected.x += 3
+            newSelected.y -= 6
+          }
         } else {
           newSelected.y += 3
         }
@@ -65,7 +86,7 @@ export const mutations = {
     this.commit('selectCell', newSelected)
   },
   async changeValue(state, number) {
-    if (!state.win) {
+    if (!state.win && !state.grid[state.selectCell.x][state.selectCell.y].isLocked) {
       state.grid[state.selectCell.x][state.selectCell.y].value = number
       this.commit('checkLastCell')
       if (state.lastCell) {
