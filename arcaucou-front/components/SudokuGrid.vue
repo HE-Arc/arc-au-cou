@@ -1,7 +1,7 @@
 <template>
-  <div class="grid grid-cols-3 gap-2 sm:gap-4 justify-center sm:w-full md:w-50 lg:w-1/2 mx-auto max-w-xl">
+  <div class="grid grid-cols-3 gap-2 sm:gap-4 justify-center sm:w-full md:w-50 lg:w-1/2 mx-auto max-w-lg">
     <div v-for="index in 9" :key="index" >
-      <Block :values=gridStart[index-1] :idBlock=index-1 :class="[{ 'mx-px': index === 2}, { 'm-px': index === 5 }, { 'my-px': index === 4 }, { 'my-px': index === 6 }, { 'mx-px': index === 8 }]"/>
+      <Block :values=gridStart[index-1] :idBlock=index-1 />
     </div>
   </diV>
 </template>
