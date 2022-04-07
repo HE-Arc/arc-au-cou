@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="mt-7">
-                        <button class="mb-4 bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                        <button class="mb-4 bg-l-60 text-d-text dark:bg-d-30 font-semibold border-l-background dark:border-d-10 border-2 bottom-2 w-full py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                             Création du compte
                         </button>
                     </div>
@@ -78,7 +78,7 @@ export default {
         } catch (error) {
           console.log(error)
           this.$toasted.global.defaultError({
-            msg: "Oupss... une erreur est survenu"
+            msg: "Oupss... une erreur est survenue"
           })
         }
 
