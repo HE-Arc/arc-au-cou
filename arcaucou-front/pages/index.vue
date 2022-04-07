@@ -2,10 +2,10 @@
   <main class='text-l-text dark:text-d-text focus:outline-none' tabindex="0" @keydown="moveCell">
     <Timer :isClock="this.isClock" :isCooldown="this.isCooldown" :timeCooldown="this.timeCooldown" :isSave="this.isSave" class="pt-10 mb-4"/>
     <div v-if="!this.alreadyPlay">
-      <div class="mx-auto w-1/2 h-20 text-center">
-        <button v-if="!this.isClock && !this.alreadyPlay " @click="this.startGame" class="text-xl text-d-text bg-l-60 dark:bg-d-60 border-l-text dark:border-d-10 border-2 bottom-2 p-3 rounded-xl focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Commencer</button>
+      <div class="mx-auto h-20 w-1/2 text-center">
+        <button v-if="!this.isClock && !this.alreadyPlay " @click="this.startGame" class="text-xl text-d-text bg-l-60 dark:bg-d-30 border-l-text dark:border-d-10 border-2 bottom-2 p-3 rounded-xl hover:border-d-10 focus:border-d-10 dark:hover:border-d-text dark:focus:border-d-text">Commencer</button>
       </diV>
-      <SudokuGrid class="mb-10" :gridStart="this.grid"/>
+      <SudokuGrid class="mb-10 mt-2" :gridStart="this.grid"/>
       <NumPav @handlePavNum="this.handlePavNum"/>
     </div>
     <div v-else class="mx-auto w-full p-2 text-center">
@@ -25,7 +25,7 @@ export default {
     return {
       title: 'Arc Au Cou',
       bodyAttrs: {
-        class:'bg-l-background dark:bg-d-background scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
+        class:'pb-5 bg-l-background dark:bg-d-background scrollbar-thin scrollbar-thumb-l-10 dark:scrollbar-thumb-d-60 scrollbar-track-gray overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full'
       }
     };
   },

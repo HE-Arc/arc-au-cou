@@ -7,7 +7,7 @@ module.exports = {
       'd-30': '#003543',
       'd-10': '#00DC82',
       'd-text': '#FFFF',
-      'l-background': '#FFFF',
+      'l-background': '#eeece8',
       'l-60': '#42B883',
       'l-30': '#42B883',
       'l-10': '#00DC82',
