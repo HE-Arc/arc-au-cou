@@ -71,10 +71,10 @@
       </div>
 
       <div v-else class="flex flex-col items-center mt-20 px-3 mx-auto sm:w-1/2 mb-10">
-        <h2 class="text-3xl text-center mb-5">Classement group</h2>
+        <h2 class="text-3xl text-center mb-5">Classement groupe</h2>
         <p class="text-2xl">Pour vous mesurer à vos amis, rejoignez ou créez un groupe via le menu des groupes.</p>
         <NuxtLink to="/groups" class="mx-auto">
-          <button class="mt-5 w-72 bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+          <button class="mt-5 w-72 font-semibold text-d-text bg-l-60 dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
             Direction les groupes
           </button>
         </NuxtLink>
