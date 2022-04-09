@@ -3,7 +3,7 @@
 	<div class="bg-white shadow">
     <div class="container mx-auto px-4">
       <div class="flex items-center justify-between py-4">
-        <div class="hidden sm:block flex-1">
+        <div class="hidden md:block flex-1">
           <div class="flex items-start">
             <NuxtLink to="/leaderboard">
               <div v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'" >
@@ -41,6 +41,24 @@
                 </svg>
               </div>
             </NuxtLink>
+            <NuxtLink to="/rules" class="ml-5">
+              <div v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'" >
+                <svg v-if="!this.rules" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 dark:text-d-10" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 dark:text-d-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div v-else>
+                <svg v-if="this.rules" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-l-background" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-l-background" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </NuxtLink>
           </div>
         </div>
 
@@ -50,13 +68,13 @@
 
         <div class="flex-1">
           <div class="flex justify-end items-center mr-5">
-            <div v-if="$auth.loggedIn" class="hidden sm:flex">
+            <div v-if="$auth.loggedIn" class="hidden md:flex">
               <p class="text-xl font-semibold text-d-text">{{ this.$auth.user.username }}</p>
               <button @click="this.handleLogout" class="text-d-text dark:text-d-text dark:hover:text-d-10 hover:text-d-10 text-xl font-semibold ml-5 mr-4">Déconnexion</button>
             </div>
-            <div v-else class="hidden sm:block">
-              <NuxtLink to="/login" class="dark:text-d-text dark:hover:text-d-10 text-xl font-semibold mr-4">Connexion</NuxtLink>
-              <NuxtLink to="/register" class="dark:text-d-text dark:hover:text-d-10 text-xl font-semibold border px-4 py-2 rounded-lg hover:border-l-background dark:hover:border-d-10 mr-4">S'inscrire</NuxtLink>
+            <div v-else class="hidden md:block">
+              <NuxtLink to="/login" class="text-d-text dark:text-d-text hover:text-l-10 dark:hover:text-d-10 text-xl font-semibold mr-4">Connexion</NuxtLink>
+              <NuxtLink to="/register" class="text-d-text dark:text-d-text hover:text-d-10 dark:hover:text-d-10 text-xl font-semibold border px-4 py-2 rounded-lg hover:border-l-10 dark:hover:border-d-10 mr-4">S'inscrire</NuxtLink>
             </div>
 
             <button v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'"
@@ -72,7 +90,7 @@
               </svg>
             </button>
             <button @click="isHamburger = !isHamburger" class="ml-3">
-              <svg xmlns="http://www.w3.org/2000/svg" class="block sm:hidden h-10 w-10 dark:text-d-10 text-l-background" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg xmlns="http://www.w3.org/2000/svg" class="block md:hidden h-10 w-10 dark:text-d-10 text-l-background" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -82,13 +100,14 @@
     </div>
     <div>
       <ul v-if="isHamburger" class="flex flex-col ml-5 p-3 font-semibold gap-3">
-        <li><NuxtLink to="/leaderboard" :class="this.leaderboard ? 'text-d-text dark:text-d-10' : 'text-l-text  dark:text-d-text'">Classement</NuxtLink></li>
-        <li><NuxtLink to="/groups" :class="this.group ? 'text-d-text dark:text-d-10' : 'text-l-text  dark:text-d-text'">Groupe</NuxtLink></li>
+        <li><NuxtLink to="/leaderboard" :class="this.leaderboard ? 'text-d-10 dark:text-d-10' : 'text-d-text  dark:text-d-text'">Classement</NuxtLink></li>
+        <li><NuxtLink to="/groups" :class="this.group ? 'text-d-10 dark:text-d-10' : 'text-d-text  dark:text-d-text'">Groupe</NuxtLink></li>
+        <li><NuxtLink to="/rules" :class="this.rules ? 'text-d-10 dark:text-d-10' : 'text-d-text  dark:text-d-text'">Règles</NuxtLink></li>
         <div v-if="!$auth.loggedIn" class="flex flex-col gap-3">
-          <li><NuxtLink to="/login" class="text-l-text  dark:text-d-text font-semibold">Connexion</NuxtLink></li>
-          <li><NuxtLink to="/register" class="text-l-text  dark:text-d-text font-semibold">S'inscrire</NuxtLink></li>
+          <li><NuxtLink to="/login" class="text-d-text  dark:text-d-text font-semibold">Connexion</NuxtLink></li>
+          <li><NuxtLink to="/register" class="text-d-text  dark:text-d-text font-semibold">S'inscrire</NuxtLink></li>
         </div>
-        <li v-else><button @click="this.handleLogout" class="text-l-text dark:text-d-text font-semibold">Déconnexion</button></li>
+        <li v-else><button @click="this.handleLogout" class="text-d-text dark:text-d-text font-semibold">Déconnexion</button></li>
       </ul>
     </div>
   </div>
@@ -107,7 +126,7 @@ export default {
       type: Boolean,
       required: false,
     },
-    help: {
+    rules: {
       type: Boolean,
       required: false,
     }

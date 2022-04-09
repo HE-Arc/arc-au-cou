@@ -23,20 +23,32 @@ export default {
   methods:{
     changeValue: function(e){
       if (this.cell.isSelected){
-        let typed = parseInt(String.fromCharCode(e.keyCode),10);
-        if(!typed) return;
-        this.$store.commit('changeValue', typed)
+        if(e.keyCode === 8){
+          this.$store.commit('changeValue', 0);
+        }else{
+          let number = 0;
+          if(e.keyCode >= 97 && e.keyCode <= 105){
+            number = parseInt(String.fromCharCode(e.keyCode-48),10);
+
+          }else{
+            number = parseInt(String.fromCharCode(e.keyCode),10);
+          }
+          if(!number) return;
+          this.$store.commit('changeValue', number);
+        }
       }
     },
     handleSelect: function(){
       if(!this.cell.isLocked) this.$store.commit('selectCell', {x:this.posX, y:this.posY});
     }
   },
-  mounted() {
-    if(!this.cell.isLocked) window.addEventListener('keypress', this.changeValue);
+  beforeMount(){
+    console.log('unmounted');
+    if(!this.cell.isLocked) window.removeEventListener('keydown', this.changeValue);
   },
-  unmounted() {
-    if(!this.cell.isLocked) window.removeEventListener('keypress', this.changeValue);
-  }
+  mounted() {
+    console.log('mounted')
+    if(!this.cell.isLocked) window.addEventListener('keydown', this.changeValue);
+  },
 }
 </script>
