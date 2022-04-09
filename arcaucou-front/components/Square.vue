@@ -28,7 +28,6 @@ export default {
         }else{
           let number = 0;
           if(e.keyCode >= 97 && e.keyCode <= 105){
-            console.log(e.keyCode);
             number = parseInt(String.fromCharCode(e.keyCode-48),10);
 
           }else{
