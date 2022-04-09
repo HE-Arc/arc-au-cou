@@ -13,12 +13,12 @@
           <p class="text-xl">Pour sauvegarder votre score, connectez-vous</p>
           <div class="w-1/2 mx-auto">
             <NuxtLink to="/login" class="mx-auto">
-              <button class="mt-5 w-full bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+              <button class="mb-4 font-semibold text-d-text bg-l-60 dark:bg-d-30 border-l-text dark:border-d-10 p-3 hover:border-d-10 focus:border-d-10 dark:hover:border-d-text dark:focus:border-d-text border-2 bottom-2 w-full py-3 rounded-xl">
                 Se connecter
               </button>
             </NuxtLink>
             <NuxtLink to="/register" class="mx-auto">
-              <button class="mt-5 w-full bg-l-background dark:bg-d-30 border-l-10 dark:border-d-10 border-2 bottom-2 py-3 rounded-xl shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+              <button class="mb-4 font-semibold text-d-text bg-l-60 dark:bg-d-30 border-l-text dark:border-d-10 p-3 hover:border-d-10 focus:border-d-10 dark:hover:border-d-text dark:focus:border-d-text border-2 bottom-2 w-full py-3 rounded-xl">
                 S'inscrire
               </button>
             </NuxtLink>
