@@ -76,7 +76,7 @@ export default {
         windSpeedMax: 0,
         dropRate: 5
       });
-      setTimeout(()=>{this.stopConfetti()}, 2500);
+      setTimeout(()=>{this.stopConfetti()}, 3000);
     },
 
     stopConfetti() {
