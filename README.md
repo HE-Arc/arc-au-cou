@@ -65,3 +65,4 @@ npm run generate
 ## Credits
 - [Izzo Valentino](https://github.com/Tino3210)
 - [Bruno Costa](https://github.com/Psemata)
+- [Diogo Lopes da Silva](https://github.com/Ultrasic)
