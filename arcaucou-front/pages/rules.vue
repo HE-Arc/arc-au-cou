@@ -5,7 +5,7 @@
       <section class="mb-20">
         <h1 class="text-3xl mb-5 font-semibold">Arc Au Cou</h1>
         <p class="text-2xl">Chaque jour Arc Au Cou vous propose de résoudre un sudoku. Vous êtes chronomètré et le but est de finir le sudoku le plus rapidement possible.</p>
-        <p class="text-2xl">Si vous créé un compte votre temps est enregistré et vous pouvez vous mesurer au autres joueurs d’Arc Au Cou !</p>
+        <p class="text-2xl">Si vous créez un compte votre temps est enregistré et vous pouvez vous mesurer au autres joueurs d’Arc Au Cou !</p>
       </section>
       <section class="mb-20">
         <h1 class="text-3xl mb-5 font-semibold">Comment jouer ?</h1>
@@ -16,7 +16,6 @@
       <section class="mb-20">
         <h1 class="text-3xl mb-5 font-semibold">Le classement</h1>
         <p class="text-2xl">Un classement général vous permet de vous mesurer aux autres joueurs d’Arc Au Cou.</p>
-        <p class="text-2xl">Un classement par groupe vous permet de vous mesurer à vos amis.</p>
         <p class="text-2xl">Si vous avez rejoint un groupe vous pouvez visualiser un classement avec seulement les membres du groupe.</p>
       </section>
       <section class="mb-20">
