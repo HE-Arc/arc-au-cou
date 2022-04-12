@@ -4,6 +4,7 @@
     <div class="container mx-auto px-4">
       <div class="flex items-center justify-between py-4">
         <div class="hidden md:block flex-1">
+          <!-- Icones -->
           <div class="flex items-start">
             <NuxtLink to="/leaderboard">
               <div v-if="$colorMode.preference == 'dark' || $colorMode.preference == 'system'" >
@@ -62,10 +63,12 @@
           </div>
         </div>
 
+        <!-- Title -->
         <div class="flex-0">
           <h1 class="text-4xl text-d-text mr-4 font-bold"><NuxtLink to="/">Arc Au Cou</NuxtLink></h1>
         </div>
 
+        <!-- User and theme -->
         <div class="flex-1">
           <div class="flex justify-end items-center mr-5">
             <div v-if="$auth.loggedIn" class="hidden md:flex">
@@ -98,6 +101,7 @@
         </div>
       </div>
     </div>
+    <!-- Hamburger menu -->
     <div>
       <ul v-if="isHamburger" class="flex flex-col ml-5 p-3 font-semibold gap-3">
         <li><NuxtLink to="/leaderboard" :class="this.leaderboard ? 'text-d-10 dark:text-d-10' : 'text-d-text  dark:text-d-text'">Classement</NuxtLink></li>
@@ -137,6 +141,9 @@ export default {
     }
   },
   methods:{
+    /**
+     * Handle logout
+     */
     handleLogout: function() {
       this.$auth.logout();
     }

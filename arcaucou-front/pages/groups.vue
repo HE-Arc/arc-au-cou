@@ -1,7 +1,9 @@
 <template>
   <div>
+    <!-- NavBar -->
     <NavBar :group="true"/>
     <main class='text-l-text dark:text-d-text'>
+      <!-- Display groupes -->
       <div v-if="hasGroup" class="mx-auto px-3 pt-20 sm:pt-6 sm:px-6 md:w-1/2 2xl:w-1/4">
         <div class="grid grid-cols-2 mx-auto mt-10 gap-y-8">
           <div class="text-center col-span-2">
@@ -23,6 +25,7 @@
           </div>
         </div>
       </div>
+      <!-- Form to join or create a group -->
       <div class="mt-20 mx-auto px-3 md:w-1/2 2xl:w-1/4">
         <h1 class="text-2xl">Rejoindre ou créer un groupe</h1>
         <br>
@@ -52,7 +55,7 @@
 <script>
 export default {
   name: 'groups',
-  middleware: 'auth',
+  middleware: 'auth', //If the user is not logged in, he will be redirected to the login page
   head() {
     return {
       title: 'Arc Au Cou - Groupe',
@@ -72,6 +75,9 @@ export default {
     }
   },
   methods:{
+    /**
+     * Get the list of the groups
+     */
     getGroups: function(){
       this.groupsList = []
       this.$axios.get("/group/").then(result => {
@@ -85,6 +91,9 @@ export default {
         })
       })
     },
+    /**
+     * Create a new group
+     */
     handleCreate: function(){
       this.$axios.post('/group/',
         {'name': this.groupData.name, 'password': this.groupData.name},
@@ -101,6 +110,9 @@ export default {
         })
       })
     },
+    /**
+     * Join a group with name and password
+     */
     handleJoin: function(){
       this.$axios.post('/group/joingroup/',
         {'name': this.groupData.name, 'password': this.groupData.name},
@@ -117,6 +129,9 @@ export default {
         })
       })
     },
+    /**
+     * Quit a group
+     */
     handleQuit: function(name){
       this.$axios.post('/group/leavegroup/',
         {'name': name},
@@ -132,13 +147,16 @@ export default {
         })
       })
     },
+    /**
+     * Reset the form
+     */
     resetForm: function(){
       this.groupData.name = '';
       this.groupData.password = '';
     }
   },
   mounted() {
-    this.getGroups();
+    this.getGroups(); //Get groups
   }
 }
 </script>

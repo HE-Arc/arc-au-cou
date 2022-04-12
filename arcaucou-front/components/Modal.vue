@@ -4,11 +4,17 @@
       <div class="modal-container bg-l-60 dark:bg-d-60 p-10 w-10/12 sm:w-8/12 lg:w-1/2 xl:w-1/3 mx-auto border-2 rounded border-l-10 shadow-lg z-50 overflow-y-auto">
         <h1 class="mb-9 text-3xl w-1/2 text-center mx-auto text-d-text">Bravo !</h1>
         <p class="text-xl text-d-text">Vous avez résolu le sudoku en {{$moment('2015-01-01').startOf('day').seconds(time).format('mm:ss')}} !</p><br>
+        <!--
+          If the user is connected
+        -->
         <div v-if="this.$auth.loggedIn">
           <p class="text-xl text-d-text">Votre score a été sauvegardé dans le classement.</p>
           <p class="text-xl text-d-text">Revenez demain pour un prochain Sudoku !</p>
           <button @click="$emit('close-modal')" class="text-sm font-semibold mt-5 border px-4 py-2 rounded-lg hover:border-d-10">Ok</button>
         </div>
+        <!--
+          If the user is not coneected, we display a button to connect
+        -->
         <div v-else>
           <p class="text-xl text-d-text">Pour sauvegarder votre score, connectez-vous.</p>
           <div class="w-full sm:w-1/3 mx-auto mt-5">

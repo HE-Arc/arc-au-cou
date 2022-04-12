@@ -1,6 +1,7 @@
 <template>
   <main class='text-l-text dark:text-d-text focus:outline-none' tabindex="0" @keydown="moveCell">
     <Timer :isClock="this.isClock" :isCooldown="this.isCooldown" :timeCooldown="this.timeCooldown" :isSave="this.isSave" class="pt-10 mb-4"/>
+    <!-- Never played -->
     <div v-if="!this.alreadyPlay">
       <div class="mx-auto h-20 w-1/2 text-center">
         <button v-if="!this.isClock && !this.alreadyPlay " @click="this.startGame" class="text-xl text-d-text bg-l-60 dark:bg-d-30 border-l-text dark:border-d-10 border-2 bottom-2 p-3 rounded-xl hover:border-d-10 focus:border-d-10 dark:hover:border-d-text dark:focus:border-d-text">Commencer</button>
@@ -8,6 +9,7 @@
       <SudokuGrid class="mb-10 mt-2" :gridStart="this.grid"/>
       <NumPav @handlePavNum="this.handlePavNum"/>
     </div>
+    <!-- Already played -->
     <div v-else class="mx-auto w-full p-2 text-center">
       <p class="text-3xl">Revenez demain pour une nouvelle partie !</p>
     </diV>
@@ -37,6 +39,7 @@ export default {
   ]),
   data: function() {
     return {
+    //basic grid
     gridStart :[[0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0],
@@ -57,9 +60,15 @@ export default {
     }
   },
   methods: {
+    /**
+     * Handle keydown event
+     */
     handlePavNum(number) {
       this.$store.commit('changeValue', number)
     },
+    /**
+     * Start the confetti
+     */
     startConfetti() {
       this.$confetti.start({
         particles: [
@@ -78,10 +87,15 @@ export default {
       });
       setTimeout(()=>{this.stopConfetti()}, 3000);
     },
-
+    /**
+     * Stop the confetti
+     */
     stopConfetti() {
       this.$confetti.stop();
     },
+    /**
+     * Transform the basic grid with object
+     */
     setupGridObject(grid){
       return grid.map((row) => {
         return row.map((element) => {
@@ -92,6 +106,9 @@ export default {
     toggleModal: function(){
       this.isModal = !this.isModal
     },
+    /**
+     * Start the game
+     */
     startGame: function(){
       this.$axios.get('/sudoku/get_sudoku').then(result => {
         this.isClock = true;
@@ -114,6 +131,9 @@ export default {
       this.isClock = false;
       this.isCooldown = true;
     },
+    /**
+     * Save the leaderboard and create a cookie
+     */
     saveToLeaderBoard: function(){
       if(this.$auth.loggedIn && this.time > 0 && !this.timeSave){
         this.$axios.post('/leaderboard/', {'time': this.time})
@@ -127,10 +147,13 @@ export default {
         const age = Math.abs(today - tomorrow) / 1000
         this.$cookies.set('sudoku-win', true, {
           path: '/',
-          maxAge: age,
+          maxAge: age,//Finish at midnight
         })
       }
     },
+    /**
+     * Move the cursor
+     */
     moveCell: function(event){
       switch(event.key){
         case 'ArrowUp':
