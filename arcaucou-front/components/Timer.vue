@@ -15,10 +15,10 @@ import 'moment/locale/fr-ch';
 export default {
   name:"timer",
   props:{
-    isClock: Boolean,
-    isCooldown: Boolean,
-    isSave: Boolean,
-    timeCooldown: Number,
+    isClock: Boolean, //If the timer is a clock
+    isCooldown: Boolean, //If the timer is a cooldown
+    isSave: Boolean, //Save the time
+    timeCooldown: Number, //Time of the cooldown
   },
   data: function(){
     return {
@@ -33,16 +33,25 @@ export default {
     }
   },
   methods: {
+    /**
+     * Start the timer
+     */
     startClock: function(){
       this.clock = setInterval(() => {
         this.time++;
       }, 1000);
     },
+    /**
+     * Start the cooldown
+     */
     startCooldown: function(){
       this.cooldown = setInterval(() => {
         this.timeLeft--;
       }, 1000);
     },
+    /**
+     * Reset the timer
+     */
     resetClock: function(){
       clearInterval(this.clock);
     }

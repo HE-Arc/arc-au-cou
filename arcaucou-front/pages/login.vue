@@ -51,6 +51,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Handle login
+     */
     async handleLogin(){
       await this.$axios.post('/login', {'username': this.userData.username, 'password': this.userData.password}).then(result =>{
         try {

@@ -61,6 +61,9 @@ export default {
     }
   },
   methods:{
+    /**
+     * Handle register
+     */
     handleRegister: async function(){
       await this.$axios.post('/register', {"username": this.userData.username, "email": this.userData.email, "password": this.userData.password, "password2": this.userData.password2}).then((result) => {
         this.$toasted.global.defaultSuccess({
@@ -76,7 +79,6 @@ export default {
             msg: "Bienvenu " + this.userData.username
           })
         } catch (error) {
-          console.log(error)
           this.$toasted.global.defaultError({
             msg: "Oupss... une erreur est survenue"
           })

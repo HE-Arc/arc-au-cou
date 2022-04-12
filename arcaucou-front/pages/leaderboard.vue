@@ -2,6 +2,7 @@
   <div>
     <NavBar :leaderboard="true" />
     <main class='text-l-text dark:text-d-text'>
+      <!-- Leaderboard global -->
       <div class="mt-20 mx-auto sm:w-1/2">
         <div class="grid grid-cols-3 mt-10 mx-auto mb-5">
           <div class="text-center col-span-3 mb-5">
@@ -32,6 +33,7 @@
         </div>
       </diV>
 
+      <!-- Leaderboard team -->
       <div v-if="hasGroup" class="mt-20 px-3 mx-auto sm:w-1/2">
         <div class="grid grid-cols-3  mx-auto mb-5">
           <div class="text-center col-span-3 mb-5">
@@ -70,6 +72,7 @@
         </div>
       </div>
 
+      <!-- Don't have group -->
       <div v-else class="flex flex-col items-center mt-20 px-3 mx-auto sm:w-1/2 mb-10">
         <h2 class="text-3xl text-center mb-5">Classement groupe</h2>
         <p class="text-2xl">Pour vous mesurer à vos amis, rejoignez ou créez un groupe via le menu des groupes.</p>
@@ -112,6 +115,9 @@ export default {
     }
   },
   methods:{
+    /**
+     * Get leaderboard global
+     */
     getLeaderboardMain(){
       this.$axios.get('/leaderboard/').then(result => {
         this.dataLeaderboard = []
@@ -128,6 +134,9 @@ export default {
         })
       })
     },
+    /**
+     * Get leaderboard group
+     */
     getLeaderboardGroup(){
       this.$axios.post('/leaderboard/list_group/', {'name': this.selectedGroup}).then(result => {
         this.dataLeaderboardGroup = []
@@ -144,6 +153,9 @@ export default {
         })
       })
     },
+    /**
+     * Get all groups
+     */
     getGroups: function(){
       if(this.$auth.loggedIn){
         this.groupsList = []
